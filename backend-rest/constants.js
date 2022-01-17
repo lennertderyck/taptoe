@@ -1,1 +1,1 @@
-export const REST_PORT = process.env.REST_PORT || 4000;
+export const REST_PORT = process.env.PORT || 4000;
