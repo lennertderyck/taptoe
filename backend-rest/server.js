@@ -13,20 +13,20 @@ export const app = express();
 
 app.get('/status', statusController.getStatus);
 
-app.listen(REST_PORT, () => {
-    console.log(`Server is listening on port ${REST_PORT}`);
+// app.listen(REST_PORT, () => {
+//     console.log(`Server is listening on port ${REST_PORT}`);
+// });
+
+io.on('connection', (socket) => {
+    socket.on('foo', (data) => console.log(data));
+    
+    setInterval(() => {
+        socket.emit('bar', {
+            message: 'Hello from server'
+        });
+    }, 1000)
 });
 
-// io.on('connection', (socket) => {
-//     socket.on('foo', (data) => console.log(data));
-    
-//     setInterval(() => {
-//         socket.emit('bar', {
-//             message: 'Hello from server'
-//         });
-//     }, 1000)
-// });
-
-// server.listen(REST_PORT, () => {
-//     console.log(`Server listening on port ${REST_PORT}`);
-// });
+server.listen(REST_PORT, () => {
+    console.log(`Server listening on port ${REST_PORT}`);
+});
