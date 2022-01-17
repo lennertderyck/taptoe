@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
     }, 1000)
 });
 
-app.listen(REST_PORT, () => console.log(`Server listening on port ${REST_PORT}`));
+app.listen(4040, () => console.log(`Server listening on port ${4040}`));
 
 server.listen(REST_PORT, () => {
     console.log(`Server listening on port ${REST_PORT}`);
