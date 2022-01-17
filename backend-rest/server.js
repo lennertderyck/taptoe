@@ -13,18 +13,12 @@ export const io = new Server(server);
 
 app.get('/status', statusController.getStatus);
 
-// app.listen(REST_PORT, () => {
-//     console.log(`Server is listening on port ${REST_PORT}`);
-// });
-
 io.on('connection', (socket) => {
-    socket.on('foo', (data) => console.log(data));
-    
-    setInterval(() => {
-        socket.emit('bar', {
-            message: 'Hello from server'
+    socket.on('status', () => {
+        socket.emit('status', {
+            status: 'OK'
         });
-    }, 1000)
+    });
 });
 
 server.listen(REST_PORT, () => {
