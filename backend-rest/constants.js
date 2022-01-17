@@ -1,0 +1,1 @@
+export const REST_PORT = process.env.REST_PORT || 4000;
