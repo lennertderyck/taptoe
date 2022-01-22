@@ -1,0 +1,23 @@
+{
+  "name": "backend-gapi",
+  "version": "1.0.0",
+  "description": "Here comes the code for the GraphQl back-end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^1.29.3",
+    "apollo-server": "^3.6.2",
+    "apollo-server-core": "^3.6.2",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^14.2.0",
+    "graphql": "^16.2.0",
+    "graphql-subscriptions": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.7"
+  }
+}
