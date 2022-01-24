@@ -61,7 +61,8 @@ module.exports = gql`
     readTribesByOwnerID: [Tribe]
     
     # LOCATIONS
-    readLocations: [Location]
     readLocation(id: ID!): Location
+    readLocations: [Location]
+    readLocationsByTribeID: [Location]
   }
 `
