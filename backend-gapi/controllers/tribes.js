@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-core");
-const { Tribe } = require("../mongo");
+const { Tribe, Location } = require("../mongo");
 const { protectedRoute } = require("../utils/credentials");
 
 const createOrUpdate = (...params) => protectedRoute(
@@ -10,11 +10,11 @@ const createOrUpdate = (...params) => protectedRoute(
         const { id } = args.tribe;
         
         try {
-            const tribe = await TribefindById(id)
+            const tribe = await Tribe.findById(id)
             
             // if no tribe was found, create a new one
             if (!tribe) {
-                const created = await Tribecreate({
+                const created = await Tribe.create({
                     ...args.tribe,
                     creator: currentUserId,
                     owners: [currentUserId],
@@ -31,9 +31,9 @@ const createOrUpdate = (...params) => protectedRoute(
             
             // if tribe was found and the current user is owner, update it
             else if (tribe.owners.includes(currentUserId)) {
-                const updated = await TribefindByIdAndUpdate(
+                const updated = await Tribe.findByIdAndUpdate(
                     id, 
-                    args.tribe, 
+                    args.tribe,
                     { new: true }
                 );
                 return updated;
@@ -51,7 +51,20 @@ const createOrUpdate = (...params) => protectedRoute(
 
 const find = async (parent, args, context, info) => {
     // TODO: implement user role based populators
-    const tribes = Tribe.find().populate("creator");
+    const tribes = Tribe.find().populate([
+        "creator owners",
+        {
+            path: "locations",
+            populate: [
+                "creator",
+                {
+                    path: "tribe",
+                    populate: "owners"
+                },
+                // match <-- match is not needed since we implemented a virtual field on the tribe model
+            ]
+        }
+    ])
     return await tribes;
 }
 

@@ -73,6 +73,7 @@ module.exports = gql`
     referral: Boolean
     creator: User,
     owners: [User],
+    locations: [Location]
   }
   
   type LocationKitchenProperties {
@@ -132,7 +133,7 @@ module.exports = gql`
   
   type Location {
     id: ID!
-    tribeId: ID!,
+    tribe: Tribe,
     name: String!
     createdAt: String!
     updatedAt: String!
@@ -144,6 +145,8 @@ module.exports = gql`
     email: String
     website: String
     description: String
+    creator: User
+    # owners: [User] <-- owners are assigned by the tribe of the location
     properties: [LocationProperties]
     rentalPeriod: RentalPeriod
   }

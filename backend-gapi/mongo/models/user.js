@@ -23,10 +23,6 @@ const userSchema = new Schema({
         ref: 'Role',
         default: '61eec55b38e0766ab63c049c'
     },
-    tribes: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Tribe'
-    }]
 })
 
 // userSchema.plugin((schema) => {

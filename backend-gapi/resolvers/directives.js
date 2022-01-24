@@ -17,8 +17,8 @@ const authenticationDirectiveSchema = (schema, directiveName) => {
         [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
 
           // Check whether this field has the specified directive
-          const upperDirective = getDirective(schema, fieldConfig, directiveName);
-            if (upperDirective) {
+          const authDirective = getDirective(schema, fieldConfig, directiveName);
+            if (authDirective) {
 
                 // Get this field's original resolver
                 const { resolve = defaultFieldResolver } = fieldConfig;
@@ -31,7 +31,7 @@ const authenticationDirectiveSchema = (schema, directiveName) => {
                     // The currrent users role, extracted from the bearer token
                     const { userId, role: currentUserRole } = context;
                     
-                    const [{ requires: requiredRole }] = upperDirective;
+                    const [{ requires: requiredRole }] = authDirective;
                     
                     console.log('directive activated');
                     
@@ -40,7 +40,7 @@ const authenticationDirectiveSchema = (schema, directiveName) => {
                     
                     // Since this is a directive, we can assume that a valid bearer token will be required
                     // If none is provided, throw an error
-                    if (!tokenIsProvided) throw new AuthenticationError('Not authenticated. Set a bearer token in the Authorization header.');
+                    if (!tokenIsProvided) throw new AuthenticationError('Not authenticated. A valid bearer token is required.');
                     
                     // Check if a token is provided but no role is required
                     // Just authenticating is enough here

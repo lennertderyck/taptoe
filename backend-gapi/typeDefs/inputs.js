@@ -44,6 +44,6 @@ module.exports = gql`
   input LocationInput {
     name: String
     address: AddressInput
-    tribeId: ID
+    tribe: ID
   }
 `

@@ -1,6 +1,6 @@
 const { Schema } = require('mongoose');
 
-module.exports = new Schema({
+const TribeSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -13,8 +13,7 @@ module.exports = new Schema({
         type: String,
     },
     address: {
-        type: Schema.Types.ObjectId,
-        ref: 'Address'
+        type: Object
     },
     description: {
         type: String,
@@ -44,5 +43,16 @@ module.exports = new Schema({
     },
     deleted_at: {
         type: Date
-    }
+    },
 })
+
+// Because location id's are stored on the 'many' side of the relationship,
+// we need to add a virtual 'tribe' field to the LocationSchema.
+// This allows population without having to store the tribe also in the location collection
+TribeSchema.virtual('locations', {
+    ref: 'Location', // The model to use
+    localField: '_id', // The index
+    foreignField: 'tribe' // The field to match
+})
+
+module.exports = TribeSchema;

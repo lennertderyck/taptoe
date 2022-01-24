@@ -15,7 +15,7 @@ module.exports = gql`
     status(
       "The current timestamp (ISO format) so it can be compared to the request timestamp."
       start: String
-    ): ServerStatusResponse @auth
+    ): ServerStatusResponse
     
     login(credentials: LoginInput): Login
     
@@ -59,5 +59,9 @@ module.exports = gql`
       The returned data will be dependent on the user's role.
     """
     readTribesByOwnerID: [Tribe]
+    
+    # LOCATIONS
+    readLocations: [Location]
+    readLocation(id: ID!): Location
   }
 `

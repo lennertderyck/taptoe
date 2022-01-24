@@ -3,7 +3,7 @@
  */
 const { AuthenticationError } = require('apollo-server');
 const bcrypt = require('bcrypt');
-const { userController, tribeController } = require('../controllers');
+const { userController, tribeController, locationsController } = require('../controllers');
 const { User, Tribe, Role } = require('../mongo');
 const { protectedRoute } = require('../utils/credentials');
 const { transformId } = require('../utils/mongo');
@@ -48,7 +48,7 @@ module.exports = {
         writeUserAndLogin: userController.createAndGenerateBearer,
         
         writeTribe: tribeController.createOrUpdate,
-        // addLocation: async (parent, args, context, info) => {
-        // }
+        
+        writeLocation: locationsController.createOrUpdate,
     }
 }

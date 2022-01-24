@@ -3,4 +3,5 @@ module.exports = {
     tribeController: require('./tribes'),
     authController: require('./auth'),
     rolesController: require('./roles'),
+    locationsController: require('./locations'),
 }

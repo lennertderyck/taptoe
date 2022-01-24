@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { User, Role } = require('../mongo');
 const { hashPassword } = require('../utils/credentials');
 
-const read = async (parent, args, context, info) => {
+const find = async (parent, args, context, info) => {
     const { id } = args;
     const currentUserId = context.userId;
     const requestedUserId = id || currentUserId;
@@ -96,7 +96,7 @@ const updateRole = async (parent, args, context, info) => {
 }
 
 module.exports = {
-    read,
+    find,
     createOrUpdate,
     createAndGenerateBearer,
     updateRole
