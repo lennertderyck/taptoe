@@ -126,4 +126,13 @@ module.exports = gql`
     properties: [LocationProperties]
     rentalPeriod: RentalPeriod
   }
+  
+  type EmailVerification {
+    id: ID!
+    user: ID!
+    token: String!
+    createdAt: String!
+    updatedAt: String!
+    used: Boolean
+  }
 `
