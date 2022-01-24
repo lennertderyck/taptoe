@@ -5,6 +5,19 @@
 const  { gql } = require('apollo-server');
 
 module.exports = gql`
+  scalar Date
+  
+  type ServerStatusResponseWakeup {
+    diff: Int
+    request: String
+    response: String
+  }
+  
+  type ServerStatusResponse {
+    status: String,
+    wakeup: ServerStatusResponseWakeup
+  }
+  
   type User {
     id: ID!
     email: String!

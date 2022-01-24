@@ -8,11 +8,29 @@ const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server');
 const { groupController } = require('../controllers');
 const { TOKEN_SALT } = process.env;
+const dayjs = require('dayjs');
 
 
 module.exports = {
     Query: {
         test: () => 'test',
+        
+        status: (parent, args, context, info) => {
+            const { start } = args;
+            
+            const requestTime = dayjs(start);
+            const currentTime = dayjs();
+            const diff = currentTime.diff(requestTime, 'millisecond');
+            
+            return {
+                status: 'ok',
+                wakeup: {
+                    diff,
+                    request: requestTime.toISOString(),
+                    response: currentTime.toISOString()
+                }
+            }
+        },
         
         login: async (parent, args, context, info) => {
             const { email, password } = args.credentials;

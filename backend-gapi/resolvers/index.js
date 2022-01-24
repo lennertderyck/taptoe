@@ -8,7 +8,7 @@ const mutation = require('./mutation');
 const subscription = require('./subscription');
 
 module.exports = [
-//   scalars,
+    scalars,
     query,
     mutation,
 //   subscription
