@@ -9,6 +9,12 @@ module.exports = gql`
     email: String!
     password: String!
   }
+  
+  input UserRoleInput {
+    name: String!
+    label: String!
+    includes: [ID]
+  }
 
   input UserInput {
     email: String
@@ -27,7 +33,7 @@ module.exports = gql`
     addOn: String
   }
 
-  input GroupInput {
+  input TribeInput {
     name: String
     website: String
     address: AddressInput
@@ -38,6 +44,6 @@ module.exports = gql`
   input LocationInput {
     name: String
     address: AddressInput
-    groupId: ID
+    tribeId: ID
   }
 `

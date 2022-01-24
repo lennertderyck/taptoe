@@ -9,10 +9,6 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Organisation'
     },
-    groups: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Group'
-    }],
     createdAt: {
         type: Date,
         default: Date.now
@@ -21,7 +17,16 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    deleted_at: Date
+    deleted_at: Date,
+    role: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role',
+        default: '61eec55b38e0766ab63c049c'
+    },
+    tribes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Tribe'
+    }]
 })
 
 // userSchema.plugin((schema) => {

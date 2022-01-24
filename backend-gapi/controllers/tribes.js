@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-core");
-const { Group } = require("../mongo");
+const { Tribe } = require("../mongo");
 const { protectedRoute } = require("../utils/credentials");
 
 const createOrUpdate = (...params) => protectedRoute(
@@ -7,41 +7,41 @@ const createOrUpdate = (...params) => protectedRoute(
     async (parent, args, context, info) => {
         const currentUserId = context.userId;
         
-        const { id } = args.group;
+        const { id } = args.tribe;
         
         try {
-            const group = await Group.findById(id)
+            const tribe = await TribefindById(id)
             
-            // if no group was found, create a new one
-            if (!group) {
-                const created = await Group.create({
-                    ...args.group,
+            // if no tribe was found, create a new one
+            if (!tribe) {
+                const created = await Tribecreate({
+                    ...args.tribe,
                     creator: currentUserId,
                     owners: [currentUserId],
                 })
                 
-                // return the created group and populate the needed data
+                // return the created tribe and populate the needed data
                 
-                const populated = await Group
+                const populated = await Tribe
                     .findById(created._id)
                     .populate("creator owners")
                     
                 return populated;
             } 
             
-            // if group was found and the current user is owner, update it
-            else if (group.owners.includes(currentUserId)) {
-                const updated = await Group.findByIdAndUpdate(
+            // if tribe was found and the current user is owner, update it
+            else if (tribe.owners.includes(currentUserId)) {
+                const updated = await TribefindByIdAndUpdate(
                     id, 
-                    args.group, 
+                    args.tribe, 
                     { new: true }
                 );
                 return updated;
             } 
             
-            // if group was found and the current user is not owner, throw an error
+            // if tribe was found and the current user is not owner, throw an error
             else {
-                throw new AuthenticationError("You are not allowed to update this group");
+                throw new AuthenticationError("You are not allowed to update this tribe");
             }
         } catch (error) {
             throw new Error(error);
@@ -49,17 +49,23 @@ const createOrUpdate = (...params) => protectedRoute(
     }
 )
 
+const find = async (parent, args, context, info) => {
+    // TODO: implement user role based populators
+    const tribes = Tribe.find().populate("creator");
+    return await tribes;
+}
+
 const findByOwnerId = (...params) => protectedRoute(
     params,
     async (parent, args, context, info) => {
         const currentUserId = context.userId;
         
         try {
-            const groups = await Group
+            const tribes = await Tribe
                 .find({ owners: currentUserId })
                 .populate("creator owners")
                 
-            return groups;
+            return tribes;
         } catch (error) {
             throw new Error(error);
         }
@@ -74,14 +80,14 @@ const findById = (...params) => protectedRoute(
         const { id } = args;
         
         try {
-            const group = await Group
+            const tribe = await Tribe
                 .findOne({
                     _id: id,
                     owners: currentUserId,
                 })
                 .populate("creator owners")
                 
-            return group;
+            return tribe;
         } catch (error) {
             throw new Error(error);
         }
@@ -91,5 +97,6 @@ const findById = (...params) => protectedRoute(
 module.exports = {
     createOrUpdate,
     findByOwnerId,
-    findById
+    findById,
+    find
 }

@@ -8,7 +8,7 @@ module.exports = gql`
   scalar Date
   
   type ServerStatusResponseWakeup {
-    diff: Int
+    warp: Int
     request: String
     response: String
   }
@@ -16,6 +16,13 @@ module.exports = gql`
   type ServerStatusResponse {
     status: String,
     wakeup: ServerStatusResponseWakeup
+  }
+  
+  type UserRole {
+    id: ID!
+    name: String!
+    label: String!
+    includes: [UserRole]
   }
   
   type User {
@@ -27,6 +34,7 @@ module.exports = gql`
     updatedAt: String!
     deleted_at: String
     role: UserRole!
+    tribes: [Tribe]
   }
   
   type Login {
@@ -51,7 +59,7 @@ module.exports = gql`
     deleted_at: String
   }
   
-  type Group {
+  type Tribe {
     id: ID!
     createdAt: String!
     updatedAt: String!
@@ -124,7 +132,7 @@ module.exports = gql`
   
   type Location {
     id: ID!
-    groupId: ID!,
+    tribeId: ID!,
     name: String!
     createdAt: String!
     updatedAt: String!

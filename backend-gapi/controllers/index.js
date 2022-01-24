@@ -1,4 +1,6 @@
 module.exports = {
     userController: require('./users'),
-    groupController: require('./groups'),
+    tribeController: require('./tribes'),
+    authController: require('./auth'),
+    rolesController: require('./roles'),
 }

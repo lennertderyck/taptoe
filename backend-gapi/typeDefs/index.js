@@ -7,6 +7,7 @@ const enums = require('./enums');
 const inputs = require('./inputs');
 const queries = require('./queries');
 const mutations = require('./mutations');
+const directives = require('./directive');
 // const subscriptions = require('./subscriptions');
 
 module.exports = [
@@ -15,5 +16,6 @@ module.exports = [
     inputs,
     queries,
     mutations,
+    directives,
 //   subscriptions
 ]

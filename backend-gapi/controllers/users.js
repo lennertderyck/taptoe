@@ -1,8 +1,22 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const { User } = require('../mongo');
+const { User, Role } = require('../mongo');
 const { hashPassword } = require('../utils/credentials');
+
+const read = async (parent, args, context, info) => {
+    const { id } = args;
+    const currentUserId = context.userId;
+    const requestedUserId = id || currentUserId;
+    
+    try {
+        const result = await User.findById(requestedUserId).populate('role');
+        return result;
+    } catch (error) {
+        throw new Error(error);
+    }
+    
+};
 
 const createOrUpdate = async (parent, args, context, info) => {
     const currentUserId = context.userId;
@@ -20,7 +34,7 @@ const createOrUpdate = async (parent, args, context, info) => {
                 ...(password && { password: hashedPassword })
             }, 
             { new: true }
-        );
+        ).populate('role tribes');
                 
         return update;
     } catch (error) {
@@ -31,8 +45,6 @@ const createOrUpdate = async (parent, args, context, info) => {
 const createAndGenerateBearer = async (parent, args, context, info) => {
     const { password, email } = args.user;
     const hashedPassword = bcrypt.hashSync(password, 12);    
-    
-    console.log(args.user)
             
     try {           
         // query user based on email     
@@ -45,11 +57,11 @@ const createAndGenerateBearer = async (parent, args, context, info) => {
                 password: hashedPassword
             });
             
-            console.log(created)
+            const populatedUser = await User.findById(created._id);
             const token = hashPassword({ userId: created._id })
-            console.log(token);
+            
             return {
-                created,
+                created: populatedUser,
                 token
             };
         }
@@ -62,9 +74,30 @@ const createAndGenerateBearer = async (parent, args, context, info) => {
     }
 }
 
-
+const updateRole = async (parent, args, context, info) => {
+    const { userId, roleId } = args;
+            
+    try {
+        const user = await User.findById(userId);
+        const role = await Role.findById(roleId);
+                
+        if (!user || !role) {
+            throw new Error('User or Role does not exist');
+        }
+        
+        User.updateOne()
+                
+        await user.updateOne({ role: role._id });
+        const populatedUser = await User.findById(user._id).populate('role');
+        return populatedUser;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 
 module.exports = {
+    read,
     createOrUpdate,
-    createAndGenerateBearer
+    createAndGenerateBearer,
+    updateRole
 }
