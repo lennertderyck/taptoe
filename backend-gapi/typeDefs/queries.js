@@ -15,7 +15,7 @@ module.exports = gql`
     status(
       "The current timestamp (ISO format) so it can be compared to the request timestamp."
       start: String
-    ): ServerStatusResponse
+    ): ServerStatusResponse @auth(requires: "USER")
     
     login(credentials: LoginInput): Login
     

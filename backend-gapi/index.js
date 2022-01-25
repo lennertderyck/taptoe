@@ -18,6 +18,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { authenticationDirectiveSchema } = require('./resolvers/directives');
+const { Role } = require('./mongo');
 
 mongoose.connect(
   `mongodb+srv://${MONGO_USER}:${MONGO_PWD}@${MONGO_CLUSTER}/${MONGO_DBNAME}?retryWrites=true&w=majority`,
@@ -38,15 +39,44 @@ const server = new ApolloServer({
     ApolloServerPluginLandingPageGraphQLPlayground()
   ],
   schema: authenticationDirectiveSchema(schema, 'auth'),
-  context: (({ req }) => {
-    // const authHeader = req.headers['authorization'];
-    // const token = authHeader && authHeader.split(' ')[1];
+  context: (async ({ req }) => {
     try {
-      const decodedToken = jwt.verify(req.headers['authorization'].split(' ')[1], TOKEN_SALT);
-      return decodedToken
-    } catch (err) {
+      // Check for authentication header
+      const authHeader = req.headers['authorization'];
+      if (!authHeader) return null;
+      
+      // Check for token
+      const token = authHeader.split(' ')[1];
+      if (!token) return null;
+      
+      // Verify token
+      const decodedToken = jwt.verify(token, TOKEN_SALT);
+      if (!decodedToken) return null;
+      
+      // Get current role config of the user
+      const roleConfig = await Role.findOne({ name: decodedToken.role }).populate('includes');
+      
+      // Check if role was found
+      if (!roleConfig) return null;
+  
+      return {
+        ...decodedToken,
+        roleConfig,
+      }
+    } catch (error) {
+      console.log(error)
       return null
     }
+    
+    // TODO: Get roles from context in directive
+    
+    // const authHeader = req.headers['authorization'];
+    // const token = authHeader && authHeader.split(' ')[1];
+    // try {
+    //   const decodedToken = jwt.verify(req.headers['authorization'].split(' ')[1], TOKEN_SALT);
+    //   return decodedToken
+    // } catch (err) {
+    // }
   })
 });
 

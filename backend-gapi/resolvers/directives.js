@@ -1,5 +1,6 @@
 const { mapSchema, getDirective, MapperKind } = require('@graphql-tools/utils');
 const { AuthenticationError } = require('apollo-server-core');
+const { defaultFieldResolver } = require('graphql');
 const { Role } = require('../mongo');
 
 const authenticationDirectiveSchema = (schema, directiveName) => {
@@ -18,8 +19,7 @@ const authenticationDirectiveSchema = (schema, directiveName) => {
 
           // Check whether this field has the specified directive
           const authDirective = getDirective(schema, fieldConfig, directiveName);
-            if (authDirective) {
-
+            if (authDirective) {                
                 // Get this field's original resolver
                 const { resolve = defaultFieldResolver } = fieldConfig;
                 
@@ -29,8 +29,7 @@ const authenticationDirectiveSchema = (schema, directiveName) => {
                     const result = await resolve(source, args, context, info);
                     
                     // The currrent users role, extracted from the bearer token
-                    const { userId, role: currentUserRole } = context;
-                    
+                    const { role: currentUserRole, roleConfig } = context;
                     const [{ requires: requiredRole }] = authDirective;
                     
                     console.log('directive activated');
@@ -49,16 +48,19 @@ const authenticationDirectiveSchema = (schema, directiveName) => {
                     // Check if the current user has the required role
                     else if (requiredRole === currentUserRole) return result;
                     
-                    // Fetch the most recent role configuraton
-                    // This is to check wether a user with a high role can access a field with a lower role
-                    const foundRole = await Role.findOne({ name: currentUserRole }).populate('includes');
-                    const foundIncludingRole = foundRole.includes.filter(role => role.name === requiredRole).length > 0
+                    // Check wether a user with a high role can access a field with a lower role
+                    const foundIncludingRole = roleConfig.includes.filter(role => role.name === requiredRole).length > 0
                     
                     // If the current user has the required (including) role, return the result
                     if (foundIncludingRole)  return result;
                     
-                    else throw new AuthenticationError('No sufficient rights. You need to be a higher role to get access.');
+                    // If user has been authenticated but not authorized, throw an error
+                    else throw new AuthenticationError(String(`
+                        No sufficient rights. You need a higher role to gain access.
+                        You have the role ${currentUserRole} but you need the role ${requiredRole}
+                    `).trim());
                 }
+                
                 return fieldConfig;
             }
         }
