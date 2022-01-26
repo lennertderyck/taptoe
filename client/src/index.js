@@ -1,17 +1,42 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import {
+  ApolloProvider,
+} from "@apollo/client";
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+import './sass/index.scss'
+import { AuthProvider } from './contexts/AuthContext';
+import { AccountModule, LoginModule, NewTribeModule, TribeDetailModule, TribeModule } from './modules';
+import client from './graphql/client';
+import { HelpSidebar } from './components';
+import { HelpProvider } from './contexts/HelpContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <AuthProvider>
+        <HelpProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="account" element={<AccountModule />}>
+                {/* <Route path="profile" element={<App />} />
+                <Route path="settings" element={<App />} /> */}
+              </Route>
+              <Route path="/account/login" element={<LoginModule />} />
+              <Route path="tribes" element={<TribeModule />}>
+                <Route path="nieuw" element={<NewTribeModule />}/>
+                <Route path=":id" element={<TribeDetailModule />}/>
+              </Route>
+              <Route path="*" element={<div>Not found</div>} />
+            </Routes>
+          </BrowserRouter>
+          <HelpSidebar />
+        </HelpProvider>
+      </AuthProvider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

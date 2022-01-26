@@ -1,6 +1,6 @@
 const { Schema } = require("mongoose");
 
-module.exports = new Schema({
+const Location = new Schema({
     tribe: {
         type: Schema.Types.ObjectId,
         ref: "Tribe",
@@ -51,4 +51,10 @@ module.exports = new Schema({
     rentalPeriod: {
         type: Object
     },
+    pricing: [{
+        type: Schema.Types.ObjectId,
+        ref: 'PricingPackage'
+    }]
 })
+
+module.exports = Location;

@@ -14,10 +14,16 @@ module.exports = gql`
         writeUserAndLogin(user: UserInput): Login
         writeUserRole(userId: ID!, roleId: ID!): User @auth(requires: "ADMIN")
         
+        # ORGANISATIONS
+        writeOrganisation(organisation: OrganisationInput, id: ID): Organisation
+        
         # TRIBES
         writeTribe(tribe: TribeInput): Tribe @auth(requires: "USER")
         
         # LOCATIONS
         writeLocation(location: LocationInput, id: ID): Location @auth(requires: "USER")
+        
+        # PRICING PACKAGES
+        writePricingPackage(pricingPackage: PricingPackageInput, id: ID): LocationPricingPackage @auth(requires: "USER")
     }
 `

@@ -19,6 +19,11 @@ module.exports = gql`
     
     login(credentials: LoginInput): Login
     
+    # ORGANISATIONS
+    
+    readOrganisation(id: ID!): Organisation
+    readOrganisations: [Organisation]
+    
     # ROLES
     
     """
@@ -39,7 +44,12 @@ module.exports = gql`
     readUser(
       "Optional – The ID of the user to read."
       id: ID
-    ): User
+    ): User @auth(requires: "USER")
+    
+    """
+      Verify if a users' token is still valid
+    """
+    verifyToken: User
     
     # TRIBES
     
@@ -63,6 +73,6 @@ module.exports = gql`
     # LOCATIONS
     readLocation(id: ID!): Location
     readLocations: [Location]
-    readLocationsByTribeID: [Location]
+    readLocationsByTribeID(tribeId: ID): [Location]
   }
 `

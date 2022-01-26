@@ -25,30 +25,10 @@ const userSchema = new Schema({
     },
 })
 
-// userSchema.plugin((schema) => {
-//     var toJSON = schema.methods.toJSON || Document.prototype.toJSON;
-
-//     schema.set('transformId', {
-//         virtuals: false,
-        
-//     });
-
-//     schema.methods.toJSON = function () {
-//         const json = toJSON.apply(this, arguments);
-
-//         delete json._id;
-//         delete json.__t;
-//         delete json.__v;
-
-//         return json;
-//     };
-    
-//     schema.methods.transformId = function () {
-//         console.log('this', this)
-//         const g = Object.create(this);
-//         console.log('g', g._id)
-//         return this;
-//     };
-// })
+userSchema.virtual('tribes', {
+    ref: 'Tribe',
+    localField: '_id',
+    foreignField: 'owners'
+})
 
 module.exports = userSchema

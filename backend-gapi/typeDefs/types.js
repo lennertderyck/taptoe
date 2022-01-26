@@ -51,12 +51,20 @@ module.exports = gql`
     addOn: String
   }
   
+  type OrganisationVerification {
+    isVerified: Boolean
+    date: String
+  }
+  
   type Organisation {
     id: ID!
     name: String!
     createdAt: String!
     updatedAt: String!
     deleted_at: String
+    verified: OrganisationVerification
+    creator: User
+    tribes: [Tribe]
   }
   
   type Tribe {
@@ -102,10 +110,14 @@ module.exports = gql`
   }
   
   type LocationPricingPackage {
-    duration: PricingDuration,
-    price: Int,
-    registred: Boolean
+    id: ID!
+    duration: PricingDuration
+    durationAmount: Int
+    price: Float
+    registredTribeOrganisation: Boolean
     description: String
+    tribe: Tribe
+    creator: User
   }
   
   type LocationRooms {
@@ -123,7 +135,6 @@ module.exports = gql`
     toilets: Int
     campfire: Boolean
     rooms: LocationRooms
-    pricing: [LocationPricingPackage]
   }
   
   type RentalPeriod {
@@ -149,6 +160,7 @@ module.exports = gql`
     # owners: [User] <-- owners are assigned by the tribe of the location
     properties: [LocationProperties]
     rentalPeriod: RentalPeriod
+    pricing: [LocationPricingPackage]
   }
   
   type EmailVerification {
@@ -158,5 +170,36 @@ module.exports = gql`
     createdAt: String!
     updatedAt: String!
     used: Boolean
+  }
+  
+  type BookingPeriod {
+    start: Int
+    end: Int
+  }
+  
+  type BookingPricing {
+    package: LocationPricingPackage
+    
+    # save the current pricing package
+    duration: PricingDuration,
+    durationAmount: Int
+    price: Float,
+    registredTribeOrganisation: Boolean
+    description: String
+    location: Location
+    creator: User
+  }
+  
+  type Booking {
+    id: ID!
+    createdAt: String!
+    updatedAt: String!
+    deleted_at: String
+    creator: User
+    location: Location
+    accepted: Boolean
+    period: BookingPeriod
+    pricing: BookingPricing
+    description: String
   }
 `

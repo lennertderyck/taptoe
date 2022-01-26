@@ -45,5 +45,20 @@ module.exports = gql`
     name: String
     address: AddressInput
     tribe: ID
+    pricingPackage: [ID]
+  }
+  
+  input OrganisationInput {
+    name: String
+    verified: Boolean
+  }
+  
+  input PricingPackageInput {
+    duration: PricingDuration
+    durationAmount: Int
+    price: Float
+    registredTribeOrganisation: Boolean
+    description: String
+    tribe: ID
   }
 `

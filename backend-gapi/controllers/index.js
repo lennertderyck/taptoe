@@ -4,4 +4,7 @@ module.exports = {
     authController: require('./auth'),
     rolesController: require('./roles'),
     locationsController: require('./locations'),
+    orgsController: require('./orgs'),
+    applicationController: require('./application'),
+    pricingPackageController: require('./pricingPackages'),
 }

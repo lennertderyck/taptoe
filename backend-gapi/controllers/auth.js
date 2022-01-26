@@ -6,8 +6,7 @@ const login = async (parent, args, context, info) => {
     const { email, password } = args.credentials;
             
     try {
-        const user = await User.findOne({ email }).populate('role');
-        // console.log(user);
+        const user = await User.findOne({ email }).populate('role tribes');
         if (!user) {
             throw new AuthenticationError('Invalid credentials');
         }

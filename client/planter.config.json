@@ -1,0 +1,13 @@
+{
+    "projectRoot": "src",
+    "structure": {
+        "component": "components",
+        "page": "pages",
+        "model": "models",
+        "asset": "assets"
+    },
+    "overrideExisting": true,
+    "useRedux": true,
+    "useTypescript": false,
+    "cssPreprocessor": "scss"
+}

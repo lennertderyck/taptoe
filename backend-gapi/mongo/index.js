@@ -5,4 +5,6 @@ module.exports = {
     Tribe: model('Tribe', require('./models/tribe')),
     Role: model('Role', require('./models/role')),
     Location: model('Location', require('./models/location')),
+    Org: model('Organisation', require('./models/organisation')),
+    PricingPackage: model('PricingPackage', require('./models/pricingPackage')),
 }

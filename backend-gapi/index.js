@@ -64,19 +64,8 @@ const server = new ApolloServer({
         roleConfig,
       }
     } catch (error) {
-      console.log(error)
       return null
     }
-    
-    // TODO: Get roles from context in directive
-    
-    // const authHeader = req.headers['authorization'];
-    // const token = authHeader && authHeader.split(' ')[1];
-    // try {
-    //   const decodedToken = jwt.verify(req.headers['authorization'].split(' ')[1], TOKEN_SALT);
-    //   return decodedToken
-    // } catch (err) {
-    // }
   })
 });
 

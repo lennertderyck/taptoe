@@ -10,7 +10,7 @@ const find = async (parent, args, context, info) => {
     const requestedUserId = id || currentUserId;
     
     try {
-        const result = await User.findById(requestedUserId).populate('role');
+        const result = await User.findById(requestedUserId).populate('role tribes');
         return result;
     } catch (error) {
         throw new Error(error);
