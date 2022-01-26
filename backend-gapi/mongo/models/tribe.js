@@ -44,6 +44,10 @@ const TribeSchema = new Schema({
     deleted_at: {
         type: Date
     },
+    verified: {
+        type: Schema.Types.ObjectId,
+        ref: 'Organisation'
+    }
 })
 
 // Because location id's are stored on the 'many' side of the relationship,

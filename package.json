@@ -1,0 +1,18 @@
+{
+  "name": "taptoe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:server": "cd ./backend-gapi && npm run dev",
+    "dev:client": "cd ./client && npm run start",
+    "start:dev": "run-p dev:server dev:client",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "run-p": "^0.0.0"
+  }
+}

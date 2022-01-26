@@ -1,14 +1,15 @@
 import React from 'react';
-import { Header } from '../components';
+import { Footer, Header } from '../components';
 
 const BaseLayout = ({ children }) => {
     return (
-        <>
+        <div className="flex flex-col h-full">
             <Header />
-            <div className="mt-12 container mx-auto max-w-6xl px-12">
+            <div className="flex-1">
                 { children }
             </div>
-        </>
+            <Footer />
+        </div>
     )
 }
 

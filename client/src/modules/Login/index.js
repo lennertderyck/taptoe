@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Container } from '../../components';
 import * as Forms from '../../forms';
+import { useAuth } from '../../hooks';
 import { BaseLayout } from '../../layouts';
 
 const LoginModule = () => {
+    const { credentials } = useAuth()
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        if (credentials) navigate('/')
+    }, [credentials])
+    
     return (
         <BaseLayout>
-            <Forms.Login />
+            <Container>
+                <Forms.Login />
+            </Container>
         </BaseLayout>
     )
 }

@@ -65,6 +65,7 @@ module.exports = gql`
     verified: OrganisationVerification
     creator: User
     tribes: [Tribe]
+    type: String
   }
   
   type Tribe {
@@ -81,7 +82,8 @@ module.exports = gql`
     referral: Boolean
     creator: User,
     owners: [User],
-    locations: [Location]
+    locations: [Location],
+    verified: Organisation
   }
   
   type LocationKitchenProperties {

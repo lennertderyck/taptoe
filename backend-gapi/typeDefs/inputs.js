@@ -39,6 +39,11 @@ module.exports = gql`
     address: AddressInput
     description: String,
     email: String
+    
+    """
+      The ID of a registerd organisation
+    """
+    verified: ID
   }
   
   input LocationInput {
@@ -51,6 +56,7 @@ module.exports = gql`
   input OrganisationInput {
     name: String
     verified: Boolean
+    type: String
   }
   
   input PricingPackageInput {

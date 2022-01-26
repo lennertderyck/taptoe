@@ -24,7 +24,7 @@ const createOrUpdate = (...params) => protectedRoute(
                 
                 const populated = await Tribe
                     .findById(created._id)
-                    .populate("creator owners")
+                    .populate("creator owners verified")
                     
                 return populated;
             } 
@@ -52,7 +52,7 @@ const createOrUpdate = (...params) => protectedRoute(
 const find = async (parent, args, context, info) => {
     // TODO: implement user role based populators
     const tribes = Tribe.find().populate([
-        "creator owners",
+        "creator owners verified",
         {
             path: "locations",
             populate: [
@@ -76,7 +76,7 @@ const findByOwnerId = (...params) => protectedRoute(
         try {
             const tribes = await Tribe
                 .find({ owners: currentUserId })
-                .populate("creator owners")
+                .populate("creator owners verified")
                 
             return tribes;
         } catch (error) {
@@ -98,7 +98,7 @@ const findById = (...params) => protectedRoute(
                     _id: id,
                     owners: currentUserId,
                 })
-                .populate("creator owners")
+                .populate("creator owners verified")
                 
             return tribe;
         } catch (error) {

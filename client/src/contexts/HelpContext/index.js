@@ -4,7 +4,7 @@ const helpContext = createContext();
 const { Provider, Consumer } = helpContext;
 
 const HelpProvider = ({ children }) => {
-    const [ opened, setOpen ] = useState(true);
+    const [ opened, setOpen ] = useState(false);
     
     const toggleHelp = () => setOpen(!opened);
     const closeHelp = () => setOpen(false);
