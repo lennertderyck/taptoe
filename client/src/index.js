@@ -8,7 +8,7 @@ import App from './App';
 
 import './sass/index.scss'
 import { AuthProvider } from './contexts/AuthContext';
-import { AccountModule, LoginModule, NewTribeModule, TribeDetailModule, TribeModule } from './modules';
+import { AccountModule, LocationDetailModule, LocationModule, LoginModule, NewLocationModule, NewTribeModule, TribeDetailModule, TribeModule } from './modules';
 import client from './graphql/client';
 import { HelpSidebar, Splash } from './components';
 import { HelpProvider } from './contexts/HelpContext';
@@ -32,6 +32,13 @@ ReactDOM.render(
                     <Route path="nieuw" element={<NewTribeModule />}/>
                     <Route path=":id" element={<TribeDetailModule />}/>
                   </Route>
+                  <Route path="locaties" element={<LocationModule />}>
+                    <Route path="nieuw/:tribeId" element={<NewLocationModule />} />
+                    <Route path="nieuw" element={<NewLocationModule />} />
+                    {/* <Route path=":id" element={<LocationDetailModule />} /> */}
+                    {/* <Route path=":id" element={<App />} /> */}
+                  </Route>
+                  <Route path="locaties/:id" element={<LocationDetailModule />} />
                   <Route path="*" element={<div>Not found</div>} />
                 </Routes>
               </SplashProvider>

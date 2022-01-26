@@ -10,7 +10,7 @@ const LoginModule = () => {
     const navigate = useNavigate();
     
     useEffect(() => {
-        if (credentials) navigate('/')
+        if (credentials) navigate('/', { replace: true })
     }, [credentials])
     
     return (

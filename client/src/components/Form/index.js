@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { isValidElement } from 'react';
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 
-const Form = ({ children, onSubmit, initialValues, test }) => {
-    const methods = useForm();
-
+const Form = ({ children, onSubmit, defaultValues, test }) => {
+    const methods = useForm({
+        defaultValues
+    });
+    
     return (
         <FormProvider { ...methods }>
             <form
@@ -16,7 +18,7 @@ const Form = ({ children, onSubmit, initialValues, test }) => {
                     }
                 })}
             >
-                { children }
+                { children instanceof Function ? children(methods) : children }
                 <button type="submit" className="hidden">submit</button>
             </form>
         </FormProvider>

@@ -30,7 +30,7 @@ const AccountModule = () => {
                     <h3 className="text-3xl font-medium font-display">tribes</h3>
                     <div className="mt-6 grid grid-cols-12">
                         { tribes.map(tribe => (
-                            <Link key={ tribe.id } to={ '/tribes/' + tribe.id } className="col-span-4 flex items-center w-fit">
+                            <Link key={ tribe.id } to={ '/tribes/' + tribe.id } className="col-span-4 flex items-center">
                                 <div className="rounded-xl p-3 bg-tt-emerald-700 w-fit mb-2 mr-4">
                                     <Icon name="community" size="1.8rem" color="#fff" />
                                 </div>

@@ -73,7 +73,7 @@ module.exports = gql`
     createdAt: String!
     updatedAt: String!
     deleted_at: String
-    name: String!
+    name: String
     email: String
     website: String
     address: Address

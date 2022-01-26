@@ -9,9 +9,11 @@ import LabelContainer from './LabelContainer';
 const Input = ({ icon, label, name = '', block, type, ...otherProps }) => {
     const { register } = useFormContext();
     
+    const disabled = otherProps.disabled || false
     const fieldProperties = {
         block, 
         type,
+        disabled,
         ...otherProps,
         ...register(name)
     }
@@ -36,7 +38,7 @@ const Input = ({ icon, label, name = '', block, type, ...otherProps }) => {
         >
             { label && <h4 className="mb-2">{ label }</h4>}
             <Wrapper
-                {...{ block }}
+                {...{ block, disabled }}
             >
                 { icon && <Icon name={ icon } color="#000" className="mr-4" />}
                 { renderField(type, otherProps) }

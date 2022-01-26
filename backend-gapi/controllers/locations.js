@@ -14,7 +14,7 @@ const createOrUpdate = async (parent, args, context, info) => {
                 creator: currentUserId,
             });
             
-            const populated = await Location.findById(created._id).populate("creator pricing");
+            const populated = await Location.findById(created._id).populate("creator tribe pricing");
             return populated;
         } else {
             const updated = await Location.findByIdAndUpdate(
@@ -42,7 +42,12 @@ const find = async (parent, args, context, info) => {
 
 const findById = async (parent, args, context, info) => {
     const { id } = args;
-    const location = await Location.findById(id).populate("creator tribe pricing");
+    const location = await Location.findById(id).populate(["creator tribe pricing", {
+        path: "tribe",
+        populate: {
+            path: "owners",
+        }
+    }]);
     return location;
 }
 

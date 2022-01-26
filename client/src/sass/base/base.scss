@@ -2,3 +2,8 @@ html, body, #root {
     min-height: 100%;
     height: 100%;
 }
+
+#root > .react-reveal {
+    min-height: 100%;
+    height: 100%;
+}

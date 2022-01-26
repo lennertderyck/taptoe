@@ -8,7 +8,7 @@ import useSplash from '../../hooks/useSplash';
 import { regex } from '../../utils';
 
 const TribeDetailModule = () => {
-    const { start, stop } = useSplash()
+    const { stop } = useSplash()
     const { id: tribeId } = useParams()
     const { user } = useAuth()
     const { data, loading } = useQuery(QUERY.TRIBE_BY_ID, {
@@ -16,8 +16,7 @@ const TribeDetailModule = () => {
     }) 
     
     useEffect(() => {
-       if (!data && loading) start() 
-       else stop()
+       if (data && !loading) stop()
     }, [data])
     
     if (!data) return <div>Loading...</div>
@@ -73,13 +72,25 @@ const TribeDetailModule = () => {
                 </div>
                 <div className="col-span-6">
                     <h3 className="text-xl font-medium font-display lowercase mb-4">Locaties</h3>
-                    { !tribeData.locations && <>
-                        <p className="text-gray-500">{ hasWriteAcces ? 'Je hebt nog geen locaties toegevoegd' : 'Deze tribe heeft nog geen locaties toegevoegd.' }</p>
-                        { hasWriteAcces && <Link to={ '/tribes/nieuw' } className="col-span-4 flex items-center w-fit mt-4">
-                            <AddButton>locatie toevoegen</AddButton>
-                        </Link>}
-                    </>}
-                    { tribeData?.locations?.map(location => (<></>))}
+                    { !tribeData.locations && <p className="text-gray-500">{ hasWriteAcces ? 'Je hebt nog geen locaties toegevoegd' : 'Deze tribe heeft nog geen locaties toegevoegd.' }</p>}
+                    { hasWriteAcces && <Link to={ '/locaties/nieuw/' + tribeId } className="col-span-4 flex items-center w-fit my-4">
+                        <AddButton>locatie toevoegen</AddButton>
+                    </Link>}
+                    { tribeData?.locations?.map(location => (
+                        <Link 
+                            key={ location.id }
+                            to={ '/locaties/' + location.id }
+                            className="flex items-center w-fit mb-4 last:mb-0"
+                        >
+                            <div className="rounded-xl p-3 bg-tt-emerald-500 w-fit mr-4">
+                                <Icon name="home-5" size="1.8rem" color="#fff" />
+                            </div>
+                            <div className="-translate-y-1">
+                                <h4 className="font-display font-medium text-lg text-gray-800 -mb-1 lowercase">{ location.address.city }</h4>
+                                <h3 className="font-medium text-lg text-gray-800">{ location.name }</h3>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
             </div>
         </Container>

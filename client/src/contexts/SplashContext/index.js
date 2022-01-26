@@ -7,16 +7,7 @@ const { Provider, Consumer } = splashContext;
 const SplashProvider = ({ children }) => {
     const [ isForced, setForce ] = useState(false);
     
-    const toggle = () => setForce(prev => !prev);
-    const start = () => setForce(true);
-    const stop = () => setForce(false);
-    
-    return <Provider value={{
-        isForced,
-        toggle,
-        start,
-        stop
-    }}>
+    return <Provider value={[ isForced, setForce ]}>
         <Splash force={ isForced }>
             { children }
         </Splash>

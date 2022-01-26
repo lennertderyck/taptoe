@@ -45,6 +45,7 @@ export default {
     TRIBE_BY_ID: gql`
         query tribeById($id: ID!) {
             readTribe(id: $id) {
+                id
                 name
                 email
                 website
@@ -54,14 +55,26 @@ export default {
                     type
                 }
                 address {
+                    street
+                    number
                     city
+                    country
+                    addOn
                 }
                 description
                 creator {
                     firstName
                 }
                 locations {
+                    id
                     name
+                    address {
+                        street
+                        number
+                        city
+                        country
+                        addOn
+                    }
                 }
                 owners {
                     firstName
@@ -71,4 +84,36 @@ export default {
         }
     `,
     
+    AVAILABLE_TRIBES_BY_OWNER: gql`
+        query readTribesByOwnerID {
+            readTribesByOwnerID {
+                id
+                name
+            }
+        }
+    `,
+    
+    LOCATION_BY_ID: gql`
+        query readLocation($id: ID!) {
+            readLocation(id: $id) {
+                id
+                name
+                description
+                tribe {
+                    id
+                    name
+                    email
+                    website
+                    owners {
+                        firstName
+                        lastName
+                    }
+                }
+                pricing {
+                    duration
+                    durationAmount
+                }
+            }
+        }
+    `,
 }

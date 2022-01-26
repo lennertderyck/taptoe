@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Overlay from './Overlay';
 import { Icon } from '..';
 import { ReactComponent as LogoSymbol } from '../../assets/logo_symbol_2.svg';
+import SmoothRender from 'react-smooth-render';
+import Fade from 'react-reveal/Fade';
 
 const Splash = ({ children, force }) => {
     const [ isLoading, setLoading ] = useState(true)
+    const showLoader = force || isLoading;
     
     useEffect(() => {
         if (process.env.NODE_ENV !== 'development') {
@@ -19,35 +22,30 @@ const Splash = ({ children, force }) => {
             }, 2000)
         }
     }, [process.env.NODE_ENV])
-    
-    if (isLoading) return <Overlay>
-        <LogoSymbol width="110px" className="mb-4 opacity-60" />
-        <h2 className="font-display lowercase text-xl font-medium text-gray-500 hidden">Loading</h2>
-        <div className="relative">   
-            <div className="animate-spin">
-                <Icon name="loader-4" size="1.8rem" color="currentColor" className="text-gray-300" />
-            </div>
-            {/* <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                <Icon name="loader-5" size="1.8rem" color="currentColor" className="text-gray-400 " />
-            </div> */}
-        </div>
-    </Overlay>;
-    
+        
     return (
         <>
-            { force && <Overlay>
-                <LogoSymbol width="110px" className="mb-4 opacity-60" />
-                <h2 className="font-display lowercase text-xl font-medium text-gray-500 hidden">Loading</h2>
-                <div className="relative">   
-                    <div className="animate-spin">
-                        <Icon name="loader-4" size="1.8rem" color="currentColor" className="text-gray-300" />
+            {
+                showLoader && <Overlay>
+                    <div className="animate-pulse">
+                        <LogoSymbol width="110px" className="mb-4 opacity-60" />
                     </div>
-                    {/* <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                        <Icon name="loader-5" size="1.8rem" color="currentColor" className="text-gray-400 " />
-                    </div> */}
-                </div>
-            </Overlay>}
-            { children }
+                    <h2 className="font-display lowercase text-xl font-medium text-gray-500 hidden">Loading</h2>
+                    <div className="relative">   
+                        <div className="animate-spin">
+                            <Icon name="loader-4" size="1.5rem" color="currentColor" className="text-gray-200 animate-pulse" />
+                        </div>
+                        {/* <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                            <Icon name="loader-5" size="1.8rem" color="currentColor" className="text-gray-400 " />
+                        </div> */}
+                    </div>
+                </Overlay>
+            }
+            
+            {/* Hide only during loading, during force it should be shown */}
+            <Fade when={ !isLoading && !force } spy={ isLoading } duration={ 350 } appear>
+                { !isLoading && children }
+            </Fade>
         </>
     )
 }

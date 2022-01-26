@@ -5,6 +5,7 @@ const Overlay = tw.div`
     flex flex-col items-center justify-center
     bg-white
     p-12
+    z-50
 `;
 
 export default Overlay

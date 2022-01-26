@@ -1,15 +1,18 @@
 import React from 'react';
+import { gridCols } from '../../utils';
+import classnames from 'classnames';
+import styled from 'styled-components';
 
-const InputGroup = ({ children }) => {
+const Content = ({ children, className: cls }) => {
     const childrenArray = React.Children.toArray(children);
-    const cols = childrenArray.length === 1 ? 'col-span-12' : 'col-span-6';
+    const cols = gridCols(childrenArray.length);
         
     return (
-        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-4">
+        <div className={ classnames('grid gap-x-6 gap-y-4', 'grid-cols-' + cols, cls) }>
             { childrenArray.map((child, index) => (
                 <div 
                     key={ index}
-                    className={ cols }
+                    className="col-span-1"
                 >
                     { child }
                 </div>
@@ -17,5 +20,9 @@ const InputGroup = ({ children }) => {
         </div>
     )
 }
+
+const InputGroup = styled(Content)`
+    margin-bottom: 1rem;
+`;
 
 export default InputGroup

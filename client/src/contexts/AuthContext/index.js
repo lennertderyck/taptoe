@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
         removeCredentials()
         setCredentials(null);
         
-        if (withRedirect) navigate('/account/login')
+        if (withRedirect) navigate('/account/login', { replace: true })
     };
     
     useEffect(() => {

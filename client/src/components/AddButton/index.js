@@ -1,10 +1,11 @@
 import React from 'react';
+import tw from 'tailwind-styled-components'
 import { Icon } from '..';
 
-const AddButton = ({ children }) => {
+const Content = ({ children }) => {
     return (
         <>
-            <div className="rounded-xl p-3 bg-gray-200 w-fit mb-2 mr-4">
+            <div className="rounded-xl p-3 bg-gray-200 w-fit mr-4">
                 <Icon name="add" size="1.8rem" />
             </div>
             <div className="-translate-y-1">
@@ -13,5 +14,9 @@ const AddButton = ({ children }) => {
         </>
     )
 }
+
+const AddButton = tw(Content)`
+    flex items-center w-fit
+`;
 
 export default AddButton

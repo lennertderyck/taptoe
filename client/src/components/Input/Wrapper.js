@@ -3,6 +3,7 @@ import tw from 'tailwind-styled-components';
 const Wrapper = tw.div`
     flex items-center
     ${ props => props.block ? 'w-full' : 'w-fit' }
+    ${ props => props.disabled && 'opacity-50 cursor-not-allowed' }
     py-3 px-4
     bg-gray-100 
     rounded-2xl

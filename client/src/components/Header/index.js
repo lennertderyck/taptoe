@@ -1,15 +1,25 @@
 import React from 'react';
 import { Form, Input } from '..';
 import { Link } from 'react-router-dom';
+import tw from 'tailwind-styled-components';
 import AccountButton from './AccountButton';
 import HeaderBackdrop from './HeaderBackdrop';
 
-const Header = () => {
+const NativeHeader = tw.header`
+    ${props => !props.large ? 'sticky top-0 left-0 right-0' : 'relative'}
+    pl-8 pr-4 pt-4 pb-4 
+    ${props => props.large && 'pb-32'}
+    border-b-2 border-gray-200 
+    bg-white
+    ${props => props.large ? 'z-0' : 'z-20'}
+`;
+
+const Header = ({ large }) => {
     // TODO: show a modal when user is starting to type and focus on the input
     
     return (
-        <header className="pl-8 pr-4 py-4 relative border-b-2 border-gray-200">
-            <HeaderBackdrop />
+        <NativeHeader { ...{ large }}>
+            <HeaderBackdrop { ...{ large }} />
             <div className="z-10 w-full flex justify-between items-center">
                 <div className="flex items-center">
                     <Link to="/">
@@ -38,7 +48,7 @@ const Header = () => {
                     <AccountButton />
                 </div>
             </div>
-        </header>
+        </NativeHeader>
     )
 }
 

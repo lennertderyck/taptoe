@@ -43,7 +43,7 @@ module.exports = gql`
     """
       The ID of a registerd organisation
     """
-    verified: ID
+    verified: ID @auth(requires: "ADMIN")
   }
   
   input LocationInput {
