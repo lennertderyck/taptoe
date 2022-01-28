@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Overlay from './Overlay';
 import { Icon } from '..';
 import { ReactComponent as LogoSymbol } from '../../assets/logo_symbol_2.svg';
-import SmoothRender from 'react-smooth-render';
 import Fade from 'react-reveal/Fade';
 
 const Splash = ({ children, force }) => {
@@ -19,7 +18,7 @@ const Splash = ({ children, force }) => {
         } else {
             setTimeout(() => {
                 setLoading(false)
-            }, 2000)
+            }, 4000)
         }
     }, [process.env.NODE_ENV])
         

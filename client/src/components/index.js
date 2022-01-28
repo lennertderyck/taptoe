@@ -13,3 +13,6 @@ export { default as Container } from './Container';
 export { default as Footer } from './Footer';
 export { default as AddButton } from './AddButton';
 export { default as LinksGroup } from './LinksGroup';
+export { default as HelpButton } from './HelpButton';
+export { default as VerifyTag } from './VerifyTag';
+export { default as Contentainer } from './Contentainer';

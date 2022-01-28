@@ -1,3 +1,5 @@
-.map-container {
-    height: 400px;
-}  
+.mapboxgl {
+    &-ctrl-attrib, &-ctrl-logo {
+        display: none !important;
+    }
+}

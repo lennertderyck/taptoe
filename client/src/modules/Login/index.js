@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container } from '../../components';
+import { Container, PageHeader } from '../../components';
 import * as Forms from '../../forms';
 import { useAuth } from '../../hooks';
 import { BaseLayout } from '../../layouts';
@@ -16,6 +16,10 @@ const LoginModule = () => {
     return (
         <BaseLayout>
             <Container>
+                <PageHeader 
+                    subtitle="Aanmelden of registreren"
+                    title="Meld je aan om verder te gaan"
+                />
                 <Forms.Login />
             </Container>
         </BaseLayout>

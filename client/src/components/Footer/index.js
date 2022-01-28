@@ -1,9 +1,12 @@
 import React from 'react';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { ReactComponent as LogoJung } from '../../assets/logos_credits/logo_jung_hinged.svg';
+import useHelp from '../../hooks/useHelp';
 
 
 const Footer = () => {
+    const { openHelp } = useHelp()
+
     return (
         <footer className=" bg-gray-200 mt-40 pb-6 flex flex-col items-center">
             <div className="pt-20 relative">
@@ -15,7 +18,7 @@ const Footer = () => {
                         <li className="inline">Over Taptoe ・ </li>
                         <li className="inline">Huur een locatie ・ </li>
                         <li className="inline">Wordt verhuurder ・ </li>
-                        <li className="inline">Help ・ </li>
+                        <li className="inline cursor-pointer" onClick={() => openHelp()} >Help ・ </li>
                         <li className="inline">Privacy</li>
                     </ul>
                 </nav>

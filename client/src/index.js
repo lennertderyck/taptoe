@@ -17,9 +17,9 @@ import { SplashProvider } from './contexts';
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
+      <HelpProvider>
       <BrowserRouter>
         <AuthProvider>
-          <HelpProvider>
               <SplashProvider>
                 <Routes>
                   <Route path="/" element={<App />} />
@@ -43,9 +43,9 @@ ReactDOM.render(
                 </Routes>
               </SplashProvider>
             <HelpSidebar />
-          </HelpProvider>
         </AuthProvider>
       </BrowserRouter>
+      </HelpProvider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

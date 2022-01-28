@@ -1,8 +1,7 @@
-import tw from 'tailwind-styled-components';
+import styled from 'styled-components';
 import ButtonWrapper from '../ButtonWrapper';
 
-const NativeButton = tw.button`
-    block
+const NativeButton = styled.button`
 `
 
 const Button = ({ children, ...otherProps }) => {

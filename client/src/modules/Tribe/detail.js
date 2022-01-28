@@ -1,14 +1,15 @@
 import { useQuery } from '@apollo/client';
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { AddButton, Container, Icon, PageHeader } from '../../components';
+import { AddButton, Container, Icon, PageHeader, VerifyTag } from '../../components';
 import { QUERY } from '../../graphql';
-import { useAuth } from '../../hooks';
+import { useAuth, useHelp } from '../../hooks';
 import useSplash from '../../hooks/useSplash';
 import { regex } from '../../utils';
 
 const TribeDetailModule = () => {
     const { stop } = useSplash()
+    const { openHelp } = useHelp()
     const { id: tribeId } = useParams()
     const { user } = useAuth()
     const { data, loading } = useQuery(QUERY.TRIBE_BY_ID, {
@@ -30,9 +31,15 @@ const TribeDetailModule = () => {
     ]
     
     return (
-        <Container>
+        <>
             <PageHeader
-                subtitle={ tribeData.verified ? tribeData.verified.type : 'organisatie'}
+                subtitle={<h4 className="font-display font-medium text-xl lowercase mb-3 text-tt-blue-500 flex items-center">
+                    <span>{ tribeData?.verified?.type ||  'Organisatie' }</span>
+                    <VerifyTag 
+                        className="ml-0 hover:ml-2"
+                        onClick={() => openHelp('faq-local-3', true)}
+                     />
+                </h4>}
                 title={ tribeData.name }
                 append={() => (
                     <nav className="mt-4 text-tt-emerald-500">
@@ -93,7 +100,7 @@ const TribeDetailModule = () => {
                     ))}
                 </div>
             </div>
-        </Container>
+        </>
     )
 }
 

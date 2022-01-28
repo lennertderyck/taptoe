@@ -5,17 +5,14 @@ const { Provider, Consumer } = helpContext;
 
 const HelpProvider = ({ children }) => {
     const [ opened, setOpen ] = useState(false);
+    const [ article, setArticle ] = useState({ id: null })
     
-    const toggleHelp = () => setOpen(!opened);
-    const closeHelp = () => setOpen(false);
-    const openHelp = (helpArticleID) => setOpen(true);
-    
-    return <Provider value={{
-        isOpen: opened,
-        toggleHelp,
-        closeHelp,
-        openHelp
-    }}>{ children }</Provider>;
+    const values = {
+        openState: [ opened, setOpen ],
+        articleState: [ article, setArticle ]
+    }
+
+    return <Provider value={ values }>{ children }</Provider>;
 }
 
 export {

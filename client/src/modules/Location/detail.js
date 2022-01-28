@@ -31,7 +31,7 @@ const LocationDetailModule = () => {
                 <div className="absolute top-0 right-0 left-0 bottom-0 -z-10"> 
                     <Map height="100%" />
                 </div>
-                <div className="px-12 py-12">
+                <div className="px-12 py-20">
                     <div className="bg-white rounded-xl max-w-7xl mx-auto shadow-lg p-10 h-fit">
                         <PageHeader
                             subtitle="verblijf"

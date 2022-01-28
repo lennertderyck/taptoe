@@ -1,8 +1,11 @@
 import { Container, Header, LinkButton, Map } from "./components";
 import * as Forms from "./forms";
+import { useHelp } from "./hooks";
 import { BaseLayout } from "./layouts";
 
 function App() {
+  const {} = useHelp()
+  
   return (
     <>
       <BaseLayout>
