@@ -1,23 +1,84 @@
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Form, Input, InputGroup } from '../components';
+import { Button, Form, Input, InputGroup, Map } from '../components';
 import { MUTATE, QUERY } from '../graphql';
+import mapboxgl from '!mapbox-gl'; // eslint-disable-line
+import { formatMapboxLookup } from '../utils';
+import axios from 'axios';
 
 const CreateLocation = ({ tribe }) => {
     const navigate = useNavigate()
+    const locationMarker = useRef();
+    const locationPopup = useRef();
     const [ inheritedAddress, setInheritedAddress ] = useState()
+    const [ pinCoords, setPinCoords ] = useState()
     const { data, loading } = useQuery(QUERY.AVAILABLE_TRIBES_BY_OWNER)
     const [ createLocation, createdLocationState] = useMutation(MUTATE.CREATE_OR_UPDATE_LOCATION)
     
-    const inheritAddress = (tribeOrLocationAddress) => {
-        setInheritedAddress(tribeOrLocationAddress)
+    
+    const handleLocationPinning = async ({ target, coords }) => {    
+        // check if there is already a marker or popup
+        const mapContainsMarker = locationMarker.current instanceof mapboxgl.Marker
+        const mapContainsPopup = locationPopup.current instanceof mapboxgl.Popup
+        
+        // remove marker if it exists
+        if (mapContainsPopup) locationPopup.current.remove()
+        
+        // fetch address from coordinates
+        const response = await axios({
+            url: `https://api.mapbox.com/geocoding/v5/mapbox.places/${ coords.lng }, ${ coords.lat }.json`,
+            params: {
+                access_token: process.env.REACT_APP_MAPBOX_TOKEN,
+                types: 'address',
+                language: 'nl'
+            }
+        })
+        
+        // transform response to address object
+        const formattedAddress = formatMapboxLookup(await response.data.features)
+        delete formattedAddress.region
+        
+        if (formattedAddress.country !== 'België') {
+            locationPopup.current = new mapboxgl.Popup({ closeOnClick: false })
+                .setLngLat([ coords.lng, coords.lat ])
+                .setHTML('<h1>Je kan hier geen locatie toevoegen.</h1>')
+                .addTo(target);
+            
+            // return nothing to block the rest of the function
+            return;
+        }
+        
+        // prepare values to be accepted by the form
+        const formReadyValues = Object.entries(formattedAddress).reduce((acc, [ key, value ]) => {
+            if (key === 'postcode') key = 'zip';
+            if (key === 'place') key = 'city';
+            
+            return {
+                ...acc,
+                [`address.${ key }`]: value
+            }
+        }, {})
+
+        setPinCoords(coords)
+        setInheritedAddress(formReadyValues)
+        
+        // remove if it exists
+        if (mapContainsMarker) locationMarker.current.remove()
+        
+        // create new marker
+        locationMarker.current = new mapboxgl
+            .Marker({
+                draggable: false
+            })
+            .setLngLat([ coords.lng, coords.lat ])
+            .addTo(target);
     }
     
     useEffect(() => {
         if (createdLocationState.data) {
-            const createdTribe = createdLocationState.data.writeLocation.tribe
-            navigate(`/tribes/${ createdTribe.id }`)
+            const createdLocation = createdLocationState.data.writeLocation.tribe
+            navigate(`/tribes/${ createdLocation.id }`)
         }
     }, [createdLocationState])
     
@@ -27,7 +88,6 @@ const CreateLocation = ({ tribe }) => {
                 tribe: tribe?.id
             }}
             onSubmit={(formData) => {
-                console.log(formData)
                 createLocation({
                     variables: {
                         location: {
@@ -40,6 +100,12 @@ const CreateLocation = ({ tribe }) => {
                         id: undefined
                     }
                 })
+            }}
+            loading={ createdLocationState.loading }
+            setValues={{
+                ...inheritedAddress,
+                longitude: pinCoords?.lng,
+                latitude: pinCoords?.lat
             }}
         >
             <InputGroup className="!mb-10">
@@ -57,23 +123,42 @@ const CreateLocation = ({ tribe }) => {
                 </Input>
             </InputGroup>
             
-            <div className="grid gap-x-6 mb-4 grid-cols-12">
-                <div className="col-span-6">
-                    <Input block name="address.street" label="Straat" placeholder="Bredenakkerstraat" value={ inheritedAddress?.street } /> 
-                </div>
-                <div className="col-span-3">
-                    <Input block name="address.number" label="Huisnummer" type="number" placeholder="31" min="0"  value={ inheritedAddress?.number }/>
-                </div>
-                <div className="col-span-3">
-                    <Input block name="address.addOn" label="Toevoeging" placeholder="A" value={ inheritedAddress?.addOn } />
-                </div>
-            </div>
-            <InputGroup>
-                <Input block name="address.city" label="Stad of gemeente" placeholder="Destelbergen" value={ inheritedAddress?.city } />
-                <Input block name="address.zip" label="Postcode" placeholder="9070" value={ inheritedAddress?.zip } />
-                <Input block name="address.country" label="Land" placeholder="BE" disabled value={ 'BE' } />
-            </InputGroup>
-            <Button type="submit" className="mt-10 mx-auto">Locatie aanmaken</Button>
+            <Map 
+                geoCoding="reverse"
+                className="rounded-xl overflow-hidden mb-6"
+                showCurrentLocation
+                onClick={ handleLocationPinning }
+            />
+            { locationMarker.current instanceof mapboxgl.Marker && (
+                <>
+                    <div className="grid gap-x-6 mb-4 grid-cols-12">
+                        <div className="col-span-6">
+                            <Input block name="address.street" label="Straat" placeholder="Bredenakkerstraat" />
+                        </div>
+                        <div className="col-span-3">
+                            <Input block name="address.number" label="Huisnummer" type="number" placeholder="31" min="0" />
+                        </div>
+                        <div className="col-span-3">
+                            <Input block name="address.addOn" label="Toevoeging" placeholder="A" />
+                        </div>
+                    </div>
+                    <InputGroup>
+                        <Input block name="address.city" label="Stad of gemeente" placeholder="Destelbergen" />
+                        <Input block name="address.zip" label="Postcode" placeholder="9070" />
+                        <Input block name="address.country" label="Land" placeholder="België" />
+                    </InputGroup>
+                    <div className="hidden">
+                        <Input block name="longitude" label="Long" />
+                        <Input block name="latitude" label="Lat" />
+                    </div>
+                </>
+            )}
+            <Button 
+                primary 
+                type="submit" 
+                className="mt-10 mx-auto"
+                loading={ createdLocationState.loading }
+            >Locatie aanmaken</Button>
             
             {/* <div className="mt-6">
                 <h4 className="font-display font-medium text-lg text-gray-800 mb-2">adres overnemen van</h4>

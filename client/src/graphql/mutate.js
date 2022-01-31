@@ -14,5 +14,13 @@ export default {
                 }
             }
         }
-    `
+    `,
+    
+    CREATE_OR_UPDATE_TRIBE: gql`
+      mutation writeTribe($tribe: TribeInput) {
+        writeTribe(tribe: $tribe) {
+          id    
+        }
+      }
+    `,
 }

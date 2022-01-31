@@ -4,15 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "install:server": "cd ./backend-gapi && npm install",
+    "install:client": "cd ./client && npm install",
     "dev:server": "cd ./backend-gapi && npm run dev",
     "dev:client": "cd ./client && npm run start",
-    "start:dev": "run-p dev:server dev:client",
+    "setup": "run-p install:server install:client",
+    "dev": "run-p dev:server dev:client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.25.0",
+    "axios-hooks": "^3.0.0",
+    "prop-types": "^15.8.1",
     "run-p": "^0.0.0"
   }
 }

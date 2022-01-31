@@ -49,6 +49,8 @@ module.exports = gql`
   input LocationInput {
     name: String
     address: AddressInput
+    longitude: Float
+    latitude: Float
     tribe: ID
     pricingPackage: [ID]
   }

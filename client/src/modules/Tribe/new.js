@@ -1,16 +1,16 @@
 import React from 'react';
-import { PageHeader } from '../../components';
+import { Container, PageHeader } from '../../components';
 import * as Form from '../../forms';
 
 const Component = () => {
     return (
-        <>
+        <Container>
             <PageHeader 
                 subtitle="tribes"
                 title="Tribe toevoegen"
             />
             <Form.CreateTribe />
-        </>
+        </Container>
     )
 }
 

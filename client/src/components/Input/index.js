@@ -22,12 +22,12 @@ const Input = ({ icon, label, name = '', block, type, ...otherProps }) => {
         return {
             'select': <Select
                 { ...fieldProperties }
-                className="text-lg font-body placeholder:text-gray-500"
+                className="text-lg font-body placeholder:text-gray-400"
             >{ otherProps.children }</Select>
         }[type] || (
             <Field
                 { ...fieldProperties }
-                className="text-lg font-body placeholder:text-gray-500"
+                className="text-lg font-body placeholder:text-gray-400"
             />
         )
     }

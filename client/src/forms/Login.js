@@ -5,7 +5,7 @@ import { QUERY } from '../graphql';
 import { useAuth } from '../hooks';
 
 const Login = () => {
-    const [ fetch, { data }] = useLazyQuery(QUERY.LOGIN);
+    const [ fetch, { data, loading }] = useLazyQuery(QUERY.LOGIN);
     const { credentials, login } = useAuth()
     
     useEffect(() => {
@@ -15,12 +15,15 @@ const Login = () => {
     }, [data]);
     
     return (
-        <Form onSubmit={(v) => fetch({
-            variables: {
-                email: v.email,
-                password: v.password
-            }
-        })}>
+        <Form
+            onSubmit={(v) => fetch({
+                variables: {
+                    email: v.email,
+                    password: v.password
+                }
+            })}
+            loading={ loading }
+        >
             <InputGroup>
                 <Input
                     label="Emailadres"
@@ -36,7 +39,7 @@ const Login = () => {
                     block
                 />
             </InputGroup>
-            <Button className="mx-auto mt-8">Aanmelden</Button>
+            <Button primary className="mx-auto mt-8" loading={ loading }>Aanmelden</Button>
         </Form>
     )
 }

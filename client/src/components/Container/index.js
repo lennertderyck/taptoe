@@ -1,10 +1,16 @@
 import React from 'react';
+import styled from 'styled-components';
+import classNames from 'classnames';
 
-const Container = ({ children }) => {
+const Wrapper = styled.div`
+    margin-top: 3rem;
+`;
+
+const Container = ({ children, className }) => {
     return (
-        <div className="mt-12 container mx-auto max-w-6xl px-12">
+        <Wrapper className={ classNames('container mx-auto max-w-6xl px-12', className) }>
             { children }
-        </div>
+        </Wrapper>
     )
 }
 

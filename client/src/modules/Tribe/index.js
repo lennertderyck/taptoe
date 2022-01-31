@@ -8,10 +8,8 @@ const TribeModule = () => {
     
     return (
         <BaseLayout>
-            <Container>
-                {/* <div>tribe: { id }</div> */}
-                <Outlet />
-            </Container>
+            {/* <div>tribe: { id }</div> */}
+            <Outlet />
         </BaseLayout>
     )
 }

@@ -38,6 +38,11 @@ export default {
                     id
                     name
                 }
+                role {
+                    id
+                    name
+                    label
+                }
             }
         }
     `,
@@ -99,6 +104,15 @@ export default {
                 id
                 name
                 description
+                latitude
+                longitude
+                address {
+                    street
+                    number
+                    city
+                    country
+                    addOn
+                }
                 tribe {
                     id
                     name

@@ -6,3 +6,4 @@ export { default as NewTribeModule } from './Tribe/new';
 export { default as LocationModule } from './Location';
 export { default as NewLocationModule } from './Location/new';
 export { default as LocationDetailModule } from './Location/detail';
+export { default as ManageModule } from './Manage';

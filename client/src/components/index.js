@@ -16,3 +16,4 @@ export { default as LinksGroup } from './LinksGroup';
 export { default as HelpButton } from './HelpButton';
 export { default as VerifyTag } from './VerifyTag';
 export { default as Contentainer } from './Contentainer';
+export { default as List } from './List';

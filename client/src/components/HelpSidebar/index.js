@@ -78,6 +78,7 @@ const HelpSidebar = () => {
                                 <div 
                                     className="border-b-2 last:border-b-0 border-gray-200 py-4 px-3 cursor-pointer hover:bg-gray-100"
                                     onClick={() => selectArticle(article)}
+                                    key={ index }
                                 >
                                     <h4 className="font-display lowercase">{ article.title }</h4>
                                 </div>
