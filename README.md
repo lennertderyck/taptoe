@@ -34,8 +34,8 @@ Auto deploys will be enabled.
 
 The rest- and GraphQl-api run on Heroku and are two separate applications.
 
-- The rest-api is available on [http://taptoe-socket.herokuapp.com/status](http://taptoe-socket.herokuapp.com/status)
-- The GraphQl-api on [https://taptoe-gapi.herokuapp.com/status](https://taptoe-gapi.herokuapp.com/status)
+- The rest-api is available on [http://taptoe-socket.herokuapp.com](http://taptoe-socket.herokuapp.com)
+- The GraphQl-api on [https://taptoe-gapi.herokuapp.com](https://taptoe-gapi.herokuapp.com)
 
 Auto deploys are only enabled for the GraphQl-api and also the GraphQl-playground is installed on this endpoint.
 
