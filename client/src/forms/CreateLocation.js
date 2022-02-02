@@ -35,6 +35,8 @@ const CreateLocation = ({ tribe }) => {
             }
         })
         
+        
+        
         // transform response to address object
         const formattedAddress = formatMapboxLookup(await response.data.features)
         delete formattedAddress.region

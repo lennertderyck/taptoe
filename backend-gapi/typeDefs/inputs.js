@@ -5,6 +5,12 @@
 const  { gql } = require('apollo-server');
 
 module.exports = gql`
+  input QueryFilterInput {
+    field: String,
+    operator: String,
+    value: String
+  }
+
   input LoginInput {
     email: String!
     password: String!

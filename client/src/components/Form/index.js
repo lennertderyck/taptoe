@@ -1,5 +1,7 @@
 import React, { isValidElement, useEffect } from 'react';
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import {ErrorBoundary} from 'react-error-boundary'
+import { ErrorFallBackComponent } from '..';
 
 const Form = ({ children, onSubmit, defaultValues, test, loading, setValues }) => {
     const methods = useForm({
@@ -24,14 +26,16 @@ const Form = ({ children, onSubmit, defaultValues, test, loading, setValues }) =
     }, [setValues])
     
     return (
-        <FormProvider { ...methods }>
-            <form
-                onSubmit={methods.handleSubmit(handleSubmit)}
-            >
-                { children instanceof Function ? children(methods) : children }
-                <button type="submit" className="hidden">submit</button>
-            </form>
-        </FormProvider>
+        <ErrorBoundary FallbackComponent={ ErrorFallBackComponent }>
+            <FormProvider { ...methods }>
+                <form
+                    onSubmit={methods.handleSubmit(handleSubmit)}
+                >
+                    { children instanceof Function ? children(methods) : children }
+                    <button type="submit" className="hidden">submit</button>
+                </form>
+            </FormProvider>
+        </ErrorBoundary>
     )
 }
 

@@ -2,6 +2,9 @@
  * Indexing TypeDefs
  */
 
+const { GraphQLJSON, GraphQLJSONObject } = require('graphql-type-json');
+
+
 const scalars = require('./scalars');
 const query = require('./query');
 const mutation = require('./mutation');
@@ -11,5 +14,8 @@ module.exports = [
     scalars,
     query,
     mutation,
-//   subscription
+    {
+        Json: GraphQLJSON,
+        JsonObject: GraphQLJSONObject,
+    }
 ]

@@ -17,3 +17,6 @@ export { default as HelpButton } from './HelpButton';
 export { default as VerifyTag } from './VerifyTag';
 export { default as Contentainer } from './Contentainer';
 export { default as List } from './List';
+export { default as Marker } from './Marker';
+export { default as MapPopup } from './MapPopup';
+export { default as ErrorFallBackComponent } from './ErrorFallBackComponent';

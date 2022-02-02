@@ -72,7 +72,10 @@ module.exports = gql`
     
     # LOCATIONS
     readLocation(id: ID!): Location
-    readLocations: [Location]
+    readLocations(
+      "Optional – Extra filter options in stringified JSON format."
+      filter: String
+    ): [Location]
     readLocationsByTribeID(tribeId: ID): [Location]
   }
 `

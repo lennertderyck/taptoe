@@ -5,6 +5,12 @@ html, body, #root {
     * {
         transition: all .3s ease;
     }
+    
+    .mapboxgl-map {
+        &, & * {
+            transition: none;
+        }
+    }
 }
 
 #root > .react-reveal {

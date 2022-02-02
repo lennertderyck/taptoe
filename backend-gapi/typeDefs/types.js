@@ -5,6 +5,8 @@
 const  { gql } = require('apollo-server');
 
 module.exports = gql`
+  scalar Json
+  scalar JsonObject
   scalar Date
   
   type ServerStatusResponseWakeup {

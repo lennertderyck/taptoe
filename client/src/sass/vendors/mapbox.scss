@@ -2,4 +2,10 @@
     &-ctrl-attrib, &-ctrl-logo {
         display: none !important;
     }
+    
+    &-popup-content {
+        padding: 0;
+        background: none;
+        box-shadow: none;
+    }
 }

@@ -23,7 +23,9 @@
     "gql-auth-directives": "^1.0.2",
     "graphql": "^16.2.0",
     "graphql-subscriptions": "^2.0.0",
+    "graphql-type-json": "^0.3.2",
     "jsonwebtoken": "^8.5.1",
+    "mongo-querystring": "^4.1.1",
     "mongoose": "^6.1.7"
   }
 }

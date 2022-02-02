@@ -2,7 +2,7 @@ const { AuthenticationError } = require('apollo-server-core');
 const jwt = require('jsonwebtoken');
 const { TOKEN_SALT } = process.env
 
-const hashPassword = (signData, expiresIn = '1h') => jwt.sign(signData, TOKEN_SALT, { expiresIn });
+const hashPassword = (signData, expiresIn = '24h') => jwt.sign(signData, TOKEN_SALT, { expiresIn });
 
 const protectedRoute = ([ parent, args, context, info ], callbackFn) => {
     if (!context.userId) {

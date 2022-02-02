@@ -98,6 +98,35 @@ export default {
         }
     `,
     
+    LOCATIONS: gql`
+        query readLocations($filter: String) {
+            readLocations(filter: $filter) {
+                id
+                name
+                description
+                latitude
+                longitude
+                address {
+                    street
+                    number
+                    city
+                    country
+                    addOn
+                }
+                tribe {
+                    id
+                    name
+                    email
+                    website
+                }
+                pricing {
+                    duration
+                    durationAmount
+                }
+            }
+        }
+    `,
+    
     LOCATION_BY_ID: gql`
         query readLocation($id: ID!) {
             readLocation(id: $id) {

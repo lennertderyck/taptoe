@@ -35,8 +35,12 @@ const createOrUpdate = async (parent, args, context, info) => {
 }
 
 const find = async (parent, args, context, info) => {
-    const locations = await Location.find().populate("creator tribe pricing");
-    console.log(locations)
+    const { filter } = args;
+    const parsedFilter = JSON.parse(filter);
+    
+    const locations = await Location.find({
+        ...parsedFilter
+    }).populate("creator tribe pricing");
     return locations;
 }
 

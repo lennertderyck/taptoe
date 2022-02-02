@@ -1,7 +1,8 @@
-import React from 'react';
-import tw from 'tailwind-styled-components';
-import styled from 'styled-components';
 import { Icon } from '..';
+import React from 'react';
+import classNames from 'classnames';
+import styled from 'styled-components';
+import tw from 'tailwind-styled-components';
 
 const Wrapper = tw.div`
     flex items-center 
@@ -22,8 +23,14 @@ const WrapperHover = styled(Wrapper)`
     }
 `;
 
-const VerifyTag = ({ ...otherProps }) => {
-    return (
+const VerifyTag = ({ simple, className, ...otherProps }) => {
+    if (simple) return (
+        <button className={ classNames('p-2 hover:bg-gray-100 rounded-lg', className) } { ...otherProps }>
+            <Icon name="check-double" color="currentColor" className="text-tt-emerald-500" />
+        </button>
+    )
+    
+    else return (
         <WrapperHover
             { ...otherProps }
         >

@@ -14,7 +14,7 @@ const localArticles = [
                 Door een beperkt budget bij de opstart van dit project zijn we genoodzaakt om gebruik te maken van diensten met goedkopen abonnementen.
             </p>
             <p>
-                Hierdoor moet onze server bijvoorbeeld even "opwarmen" en kan het een minuutje duren om de pagina in te laden als ons platform een tijdje niet gebruikt.
+                Hierdoor moet onze server bijvoorbeeld even "opwarmen" en kan het een minuutje duren om de pagina in te laden als ons platform een tijdje niet gebruikt wordt.
             </p>
             <p>
                 Maar bij regelmatig gebruik blijft de server actief en zal de website dus altijd snel laden.
@@ -42,7 +42,7 @@ const localArticles = [
             <p>Om misbruik en dergelijke te voorkomen hebben we een systeem geïmplementeerd waarbij groepen en locatie geverifieerd worden alvorens het label te krijgen.</p>
             <p>Dit kan op verscheidene manieren. Doordat wij de groep kennen, door in persoon de locatie te gaan bezoeken, door de recenties, ...</p>
             <p>Ben je een groep of persoon met goeie bedoelingen en wil je geverifieerd worden? Dan is de kans zeer groot dat dat zal gebeuren. Contacteer ons gewoon en wij laten je weten welke stappen je moet doorloppen. Met een duidelijke website ben je meestal binnen de werkdag geverifieerd!</p>
-            <p>Locaties kunnen afzonderlijk geverifieerd worden. De verificatie van een tribe resulteert echter wel automatisch in de verificatie van al hun locaties.</p>
+            <p>Locaties en tribes kunnen afzonderlijk geverifieerd worden.</p>
         `,
         relatedArticles: ['faq-local-1', 'faq-local-2'],
         articleGroups: ['rfj343FSD']
@@ -68,6 +68,16 @@ const localArticles = [
             <p>Daarnaast maak het het voor toekomstige leiding ook eenvoudig om te zien waar je vereniging al eens geboekt heeft, of welke boekingen er nog open staan voor de komende jaren. Zo vermijd je dubbele boekingen en onnodige kosten.</p>
         `,
         relatedArticles: ['faq-local-2'],
+        articleGroups: []
+    },
+    {
+        id: 'faq-local-6',
+        title: 'Wat is de Community Tribe',
+        content: `
+            <p>Het is mogelijk voor leden om locaties en tribes voor te stellen waarvan zij geen eigenaar zijn. Deze locaties en tribes worden dan automatisch toegevoegd aan de Community Tribe.</p>
+            <p>Locaties en tribes van de community kunnen op hun beurt geclaimd worden door de eigenaars.</p>
+        `,
+        relatedArticles: ['faq-local-4', 'faq-local-5'],
         articleGroups: []
     }
 ]

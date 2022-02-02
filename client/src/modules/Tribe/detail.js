@@ -1,19 +1,22 @@
-import { useQuery } from '@apollo/client';
-import React, { Fragment, useEffect } from 'react';
+import { AddButton, Button, Container, ErrorFallBackComponent, Icon, LinkButton, PageHeader, VerifyTag } from '../../components';
 import { Link, useParams } from 'react-router-dom';
-import { AddButton, Button, Container, Icon, LinkButton, PageHeader, VerifyTag } from '../../components';
-import { QUERY } from '../../graphql';
+import React, { Fragment, useEffect } from 'react';
 import { useAuth, useHelp } from '../../hooks';
-import useSplash from '../../hooks/useSplash';
+
+import { ErrorBoundary } from 'react-error-boundary';
+import { QUERY } from '../../graphql';
 import { regex } from '../../utils';
+import { useQuery } from '@apollo/client';
+import useSplash from '../../hooks/useSplash';
 
 const TribeDetailModule = () => {
     const { stop } = useSplash()
     const { openHelp } = useHelp()
     const { id: tribeId } = useParams()
     const { user } = useAuth()
-    const { data, loading } = useQuery(QUERY.TRIBE_BY_ID, {
+    const { data, loading, refetch: refetchTribe } = useQuery(QUERY.TRIBE_BY_ID, {
         variables: { id: tribeId }
+        
     }) 
     
     useEffect(() => {
@@ -31,7 +34,7 @@ const TribeDetailModule = () => {
     ]
     
     return (
-        <>
+        <ErrorBoundary FallbackComponent={ ErrorFallBackComponent }>
             <div className="border-b-2">
                 <Container className="!mt-0 py-4">
                     <LinkButton to="/account" icon="arrow-left">Bekijk je andere tribes</LinkButton>
@@ -41,8 +44,15 @@ const TribeDetailModule = () => {
                 <PageHeader
                     subtitle={<h4 className="font-display font-medium text-xl lowercase mb-3 text-tt-blue-500 flex items-center">
                         <span>{ tribeData?.verified?.type ||  'Organisatie' }</span>
+                        <button 
+                            className="ml-2 p-2 hover:bg-gray-100 rounded-lg" 
+                            onClick={() => openHelp('faq-local-6', true)}
+                        >
+                            <Icon name="group-2" />
+                        </button>
                         <VerifyTag 
-                            className="ml-0 hover:ml-2"
+                            className=""
+                            simple
                             onClick={() => openHelp('faq-local-3', true)}
                         />
                     </h4>}
@@ -106,7 +116,7 @@ const TribeDetailModule = () => {
                     </div>
                 </div>
             </Container>
-        </>
+        </ErrorBoundary>
     )
 }
 

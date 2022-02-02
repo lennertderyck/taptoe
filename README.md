@@ -12,6 +12,7 @@ We made it easy to install and run everything you need in one go thanks to the [
 First you should install the needed packages for both front- and back-end.
 Run this command from the project-root.
 ```bash
+npm i
 npm run setup
 ```
 

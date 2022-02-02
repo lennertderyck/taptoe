@@ -1,9 +1,10 @@
+import { AddButton, Container, Icon, PageHeader } from '../../components';
+
+import BaseLayout from '../../layouts/BaseLayout';
+import { Link } from 'react-router-dom';
+import { QUERY } from '../../graphql';
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { Link } from 'react-router-dom';
-import { AddButton, Container, Icon, PageHeader } from '../../components';
-import BaseLayout from '../../layouts/BaseLayout';
-import { QUERY } from '../../graphql';
 
 const AccountModule = () => {
     const { data } = useQuery(QUERY.CURRENT_USER)
@@ -28,10 +29,10 @@ const AccountModule = () => {
                 />
                 <div className="mt-12">
                     <h3 className="text-3xl font-medium font-display">tribes</h3>
-                    <div className="mt-6 grid grid-cols-12">
+                    <div className="mt-6 grid grid-cols-12 gap-6">
                         { tribes.map(tribe => (
                             <Link key={ tribe.id } to={ '/tribes/' + tribe.id } className="col-span-4 flex items-center">
-                                <div className="rounded-xl p-3 bg-tt-emerald-700 w-fit mb-2 mr-4">
+                                <div className="rounded-xl p-3 bg-tt-emerald-700 w-fit mr-4">
                                     <Icon name="community" size="1.8rem" color="#fff" />
                                 </div>
                                 <div className="-translate-y-1">
