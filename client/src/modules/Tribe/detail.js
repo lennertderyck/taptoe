@@ -15,9 +15,9 @@ const TribeDetailModule = () => {
     const { id: tribeId } = useParams()
     const { user } = useAuth()
     const { data, loading, refetch: refetchTribe } = useQuery(QUERY.TRIBE_BY_ID, {
-        variables: { id: tribeId }
-        
-    }) 
+        variables: { id: tribeId },
+        fetchPolicy: 'network-only'
+    })
     
     useEffect(() => {
        if (data && !loading) stop()

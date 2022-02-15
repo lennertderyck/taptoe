@@ -18,6 +18,24 @@ export default {
         }
     `,
     
+    OTP_LOGIN: gql`
+        query Login($otpToken: String) {
+            login(otpToken: $otpToken) {
+                token
+                user {
+                    firstName
+                    lastName
+                    email
+                    tribes {
+                        id
+                        name
+                    }
+                }
+            }
+        }
+    `,
+                    
+    
     ORGANISATIONS: gql`
         query organisations {
             readOrganisations {
@@ -42,6 +60,11 @@ export default {
                     id
                     name
                     label
+                }
+                pins {
+                    id
+                    pinItem
+                    pinType
                 }
             }
         }
@@ -155,6 +178,49 @@ export default {
                 pricing {
                     duration
                     durationAmount
+                }
+            }
+        }
+    `,
+    
+    ROLES: gql`
+        {
+            readRoles {
+                id
+                name
+                label
+                includes {
+                    id
+                    label
+                    name
+                }
+            }
+        }
+    `,
+    
+    PIN_BY_ITEM: gql`
+        query readUserPin($pinItemId: ID) {
+            readUserPin(pinItemId: $pinItemId) {
+                id
+                pinItem
+                creator {
+                    firstName
+                    lastName
+                }
+            }
+        }
+    `,
+    
+    USERS: gql`
+        {
+            readUsers {
+                id
+                firstName
+                lastName
+                email
+                role {
+                    name
+                    label
                 }
             }
         }

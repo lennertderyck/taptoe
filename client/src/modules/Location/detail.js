@@ -1,7 +1,8 @@
 import { BaseLayout, LargeHeaderLayout } from '../../layouts';
-import { Container, Icon, LinkButton, LinksGroup, List, Map, PageHeader } from '../../components';
+import { Button, Container, Icon, LinkButton, LinksGroup, List, Map, PageHeader, PinButton } from '../../components';
 import { Link, useParams } from 'react-router-dom';
 import React, { useEffect } from 'react';
+import Popup from 'reactjs-popup';
 import { formatGoogleMapsSearchLink, formatLink, generateStaticMapUri } from '../../utils';
 
 import { ErrorBoundary } from 'react-error-boundary';
@@ -31,7 +32,10 @@ const LocationDetailModule = () => {
             <BaseLayout>
                 <div className="border-b-2">
                     <Container className="!mt-0 py-4">
-                        <LinkButton to={ '/tribes/' + tribe.id } icon="arrow-left">Bekijk andere locaties je tribe</LinkButton>
+                        <div className="flex items-center justify-between">
+                            <LinkButton to={ '/tribes/' + tribe.id } icon="arrow-left">Bekijk andere locaties je tribe</LinkButton>
+                            <LinkButton to={ 'edit' } iconAfter="settings-4">Locatie instellingen</LinkButton>
+                        </div>
                     </Container>
                 </div>
                 <div className="relative">
@@ -73,9 +77,17 @@ const LocationDetailModule = () => {
                                 )}
                             />
                             <div className="absolute top-0 right-0 p-2">
-                                <div className="p-2 hover:bg-gray-300 rounded-lg">
-                                    <Icon name="more-2" color="currentColor" />
-                                </div>
+                                <PinButton model="Location" pinItemId={ locationId } />
+                                {/* <Popup
+                                  trigger={
+                                  }
+                                  position={['top center', 'bottom right', 'bottom left']}
+                                  closeOnDocumentClick
+                                >
+                                    <div className="p-4">
+                                        <Button theme="primary" onClick={() => {}}>Verwijder locatie</Button>
+                                    </div>
+                                </Popup> */}
                             </div>
                         </div>
                     </div>
@@ -103,9 +115,13 @@ const LocationDetailModule = () => {
                                     <div className="col-span-1">
                                         <h4 className="text-gray-500"><strong>Adres</strong></h4>
                                         { locationData.address && (
-                                            <a href={ formatGoogleMapsSearchLink(locationData.address) } target="_blank" rel="noopener" className="text-gray-500 underline">
-                                                <p>{ locationData.address.street } { locationData.address.number }</p>
-                                                <p>{ locationData.address.zip } { locationData.address.city }</p>
+                                            <a href={ formatGoogleMapsSearchLink(locationData.address) } target="_blank" rel="noopener" className="">
+                                                <p className="underline text-gray-500">{ locationData.address.street } { locationData.address.number }</p>
+                                                <p className="underline text-gray-500">{ locationData.address.zip } { locationData.address.city }</p>
+                                                <small className="font-display lowercase no-underline text-gray-400 flex items-center">
+                                                    <span>Open in Google Maps</span>
+                                                    <Icon name="arrow-right-up" size="1rem" className="ml-0.5 translate-y-0.5" color="currentColor" />
+                                                </small>
                                             </a>
                                         )}
                                     </div>
@@ -122,7 +138,13 @@ const LocationDetailModule = () => {
                         <div className="col-span-6">
                             <h3 className="text-xl font-medium font-display lowercase mb-4">overzicht</h3>
                             { !locationData.properties ? (
+                                <>
                                     <p className="text-gray-500 italic">Geen eigenschappen voor deze locatie.</p>
+                                    <div className="rounded-xl p-5 bg-gray-100 flex items-center text-gray-500 mt-4">
+                                        <Icon name="road-map" size="1.8rem" color="currentColor" className="mr-5" />
+                                        <p className="font-display font-base text-lg lowercase leading-6">Eigenschappen<br />zijn binnenkort beschikbaar</p>
+                                    </div>
+                                </>
                                 ) : (
                                     <List>
                                         {Item => (

@@ -25,9 +25,11 @@
     "react-scripts": "5.0.0",
     "react-smooth-render": "^1.0.0",
     "react-transition-group": "^4.4.2",
+    "reactjs-popup": "^2.0.5",
     "remixicon": "^2.5.0",
     "sass": "^1.49.0",
     "styled-components": "^5.3.3",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "tailwind-styled-components": "^2.1.2",
     "web-vitals": "^2.1.3"
   },

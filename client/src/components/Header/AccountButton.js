@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 const AccountButton = () => {
     const { credentials } = useAuth()
     
+    console.log(credentials)
+    
     if (!credentials) {
         return (
             <Link

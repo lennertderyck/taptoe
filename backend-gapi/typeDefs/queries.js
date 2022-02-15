@@ -17,7 +17,7 @@ module.exports = gql`
       start: String
     ): ServerStatusResponse @auth(requires: "USER")
     
-    login(credentials: LoginInput): Login
+    login(credentials: LoginInput, otpToken: String): Login
     
     # ORGANISATIONS
     
@@ -45,6 +45,7 @@ module.exports = gql`
       "Optional – The ID of the user to read."
       id: ID
     ): User @auth(requires: "USER")
+    readUsers: [User] @auth(requires: "ADMIN")
     
     """
       Verify if a users' token is still valid
@@ -77,5 +78,10 @@ module.exports = gql`
       filter: String
     ): [Location]
     readLocationsByTribeID(tribeId: ID): [Location]
+    
+    # USER PIN
+    readUserPinById(id: ID): UserPin @auth(requires: "USER")
+    readUserPin(pinItemId: ID, pinType: String): UserPin @auth(requires: "USER")
+    readUserPins: [UserPin] @auth(requires: "USER")
   }
 `

@@ -4,9 +4,17 @@ import { useLazyQuery } from '@apollo/client';
 import { QUERY } from '../graphql';
 import { useAuth } from '../hooks';
 
-const Login = () => {
-    const [ fetch, { data, loading }] = useLazyQuery(QUERY.LOGIN);
+const Login = ({ otpToken }) => {
+    const [ fetch, { data, loading, error }] = useLazyQuery(otpToken ? QUERY.OTP_LOGIN : QUERY.LOGIN);
     const { credentials, login } = useAuth()
+    
+    useEffect(() => {
+        fetch({
+            variables: {
+                otpToken
+            }
+        })
+    }, [ otpToken ])
     
     useEffect(() => {
         if (data) {
@@ -14,7 +22,12 @@ const Login = () => {
         }
     }, [data]);
     
-    return (
+    if (otpToken && error) return <div>
+        <h3>Deze code was niet geldig</h3>
+        <p>Vraag bij de eigenaar een nieuwe code aan.</p>
+    </div>;
+    
+    else return (
         <Form
             onSubmit={(v) => fetch({
                 variables: {
@@ -39,7 +52,7 @@ const Login = () => {
                     block
                 />
             </InputGroup>
-            <Button primary className="mx-auto mt-8" loading={ loading }>Aanmelden</Button>
+            <Button theme="primary" className="mx-auto mt-8" loading={ loading }>Aanmelden</Button>
         </Form>
     )
 }

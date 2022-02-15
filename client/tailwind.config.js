@@ -18,10 +18,15 @@ module.exports = {
           blue: {
             '500': "#26335E",
             '700': '#1C2440',
+          },
+          red: {
+            '500': "#A02A35",
           }
         }
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide')
+  ],
 }

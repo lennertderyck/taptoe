@@ -1,4 +1,5 @@
 const { Schema } = require("mongoose");
+const mongooseSoftDelete = require("mongoose-delete");
 
 const PricingPackage = new Schema({
     duration: {
@@ -30,5 +31,6 @@ const PricingPackage = new Schema({
         ref: "User",
     }
 })
+
 
 module.exports = PricingPackage;

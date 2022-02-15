@@ -1,4 +1,5 @@
 const { Schema } = require('mongoose');
+const mongooseSoftDelete = require('mongoose-delete');
 
 const TribeSchema = new Schema({
     name: {
@@ -58,5 +59,6 @@ TribeSchema.virtual('locations', {
     localField: '_id', // The index
     foreignField: 'tribe' // The field to match
 })
+
 
 module.exports = TribeSchema;

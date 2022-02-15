@@ -34,9 +34,10 @@ module.exports = gql`
     lastName: String!
     createdAt: String!
     updatedAt: String!
-    deleted_at: String
+    deleted: Boolean
     role: UserRole!
     tribes: [Tribe]
+    pins: [UserPin]
   }
   
   type Login {
@@ -63,7 +64,7 @@ module.exports = gql`
     name: String!
     createdAt: String!
     updatedAt: String!
-    deleted_at: String
+    deleted: Boolean
     verified: OrganisationVerification
     creator: User
     tribes: [Tribe]
@@ -74,7 +75,7 @@ module.exports = gql`
     id: ID!
     createdAt: String!
     updatedAt: String!
-    deleted_at: String
+    deleted: Boolean
     name: String
     email: String
     website: String
@@ -152,7 +153,7 @@ module.exports = gql`
     name: String!
     createdAt: String!
     updatedAt: String!
-    deleted_at: String
+    deleted: Boolean
     address: Address
     latitude: Float
     longitude: Float
@@ -198,12 +199,22 @@ module.exports = gql`
     id: ID!
     createdAt: String!
     updatedAt: String!
-    deleted_at: String
+    deleted: Boolean
     creator: User
     location: Location
     accepted: Boolean
     period: BookingPeriod
     pricing: BookingPricing
     description: String
+  }
+  
+  type UserPin {
+    id: ID!
+    createdAt: String!
+    updatedAt: String!
+    deleted: Boolean
+    creator: User
+    pinType: String,
+    pinItem: Json
   }
 `

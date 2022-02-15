@@ -2,7 +2,7 @@ const { Role } = require("../mongo");
 
 const createOrUpdate = async (parent, args, context, info) => {
     const { id, role } = args;
-            
+                
     try {
         const result = await Role.findById(id);
                 
@@ -16,10 +16,13 @@ const createOrUpdate = async (parent, args, context, info) => {
                 return created;
             }
         } else {
-            await result.updateOne(role);
-            
-            const populatedRole = await Role.findById(result._id).populate('includes');
-            return populatedRole;
+            const updated = await Role.findByIdAndUpdate(
+                id, 
+                role, 
+                { new: true }
+            ).populate('includes');
+            console.log({ updated });
+            return updated;
         }
     } catch (error) {
         throw new Error(error);
@@ -28,7 +31,7 @@ const createOrUpdate = async (parent, args, context, info) => {
 }
 
 const findAll = async (parent, args, context, info) => {
-    const role = await Role.find();
+    const role = await Role.find().populate('includes');
     return role;
 }
 

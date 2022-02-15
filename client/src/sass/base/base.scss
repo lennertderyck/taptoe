@@ -6,7 +6,9 @@ html, body, #root {
         transition: all .3s ease;
     }
     
-    .mapboxgl-map {
+    .mapboxgl-map, 
+    .mapboxgl-marker, .mapboxgl-marker-anchor-center,
+    .popup-root {
         &, & * {
             transition: none;
         }

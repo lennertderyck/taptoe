@@ -18,7 +18,7 @@ const ErrorFallBackComponent = ({ error, componentStack, resetErrorBoundary, isP
                 <h2 className="text-4xl font-semibold text-tt-blue-700 mb-2">Er ging iets mis</h2>
                 <p>We konden dit deel van de pagina niet laden</p>
                 <div className="flex items-center mt-4">
-                    <Button onClick={ handleReset } primary loading={ loading }>Opnieuw proberen</Button>
+                    <Button onClick={ handleReset } theme="primary" loading={ loading }>Opnieuw proberen</Button>
                 </div>
             </div>
             

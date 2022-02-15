@@ -1,6 +1,7 @@
 const { Schema } = require("mongoose");
+const mongooseSoftDelete = require('mongoose-delete');
 
-module.exports = new Schema({
+const Role = new Schema({
     name: {
         type: String,
         required: true
@@ -14,3 +15,5 @@ module.exports = new Schema({
         ref: "Role"
     }]
 })
+
+module.exports = Role;

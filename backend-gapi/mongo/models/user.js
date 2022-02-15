@@ -1,4 +1,5 @@
 const { Schema, Document } = require('mongoose')
+const mongooseSoftDelete = require('mongoose-delete');
 
 const userSchema = new Schema({
     email: String,
@@ -30,5 +31,12 @@ userSchema.virtual('tribes', {
     localField: '_id',
     foreignField: 'owners'
 })
+
+userSchema.virtual('pins', {
+    ref: 'UserPin',
+    localField: '_id',
+    foreignField: 'creator'
+})
+
 
 module.exports = userSchema

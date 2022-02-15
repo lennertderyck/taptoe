@@ -1,5 +1,7 @@
+import classNames from 'classnames';
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useOutlet, useMatch, useInRouterContext } from 'react-router-dom';
+import { Container, Devider, LinkButton } from '../../components';
 import { useAuth } from '../../hooks';
 import useSplash from '../../hooks/useSplash';
 import { BaseLayout } from '../../layouts';
@@ -18,6 +20,8 @@ const ManageModule = () => {
     
     return (
         <BaseLayout>
+            
+            <Outlet />
         </BaseLayout>
     )
 }

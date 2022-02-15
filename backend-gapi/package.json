@@ -26,6 +26,8 @@
     "graphql-type-json": "^0.3.2",
     "jsonwebtoken": "^8.5.1",
     "mongo-querystring": "^4.1.1",
-    "mongoose": "^6.1.7"
+    "mongoose": "^6.1.7",
+    "mongoose-delete": "^0.5.4",
+    "mongoosejs-soft-delete": "^1.0.2"
   }
 }

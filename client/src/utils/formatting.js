@@ -38,3 +38,16 @@ export const formatGoogleMapsSearchLink = (address) => {
     link.searchParams.set('query', queryParams);
     return link.toString();
 }
+
+export const formatPinType = (pinType) => {
+    return {
+        'Location': {
+            url: '/locaties',
+            label: 'Locatie'
+        },
+        'Tribe': {
+            url: '/tribes',
+            label: 'Tribe'
+        },
+    }[pinType]
+}

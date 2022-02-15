@@ -20,3 +20,8 @@ export { default as List } from './List';
 export { default as Marker } from './Marker';
 export { default as MapPopup } from './MapPopup';
 export { default as ErrorFallBackComponent } from './ErrorFallBackComponent';
+export { default as RoleSelector } from './RoleSelector';
+export { default as PinButton } from './PinButton';
+export { default as ButtonGroup } from './ButtonGroup';
+export { default as SpotlightSearch } from './SpotlightSearch';
+export { default as Devider } from './Devider';

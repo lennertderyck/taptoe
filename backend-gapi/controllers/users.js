@@ -2,21 +2,50 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const { User, Role } = require('../mongo');
-const { hashPassword } = require('../utils/credentials');
+const { hashJwtToken } = require('../utils/credentials');
 
-const find = async (parent, args, context, info) => {
+const findById = async (parent, args, context, info) => {
     const { id } = args;
     const currentUserId = context.userId;
     const requestedUserId = id || currentUserId;
     
     try {
-        const result = await User.findById(requestedUserId).populate('role tribes');
+        const result = await User.findById(requestedUserId).populate([
+            'role', 
+            {
+                path: 'pins',
+                populate: ['pinItem']
+            },
+            {
+                path: 'tribes',
+                populate: ['creator owners locations verified']
+            }
+        ]);
         return result;
     } catch (error) {
         throw new Error(error);
     }
-    
 };
+
+const find = async (parent, args, context, info) => {
+    try {
+        const result = await User.find({}).populate([
+            'role',
+            {
+                path: 'pins',
+                populate: ['pinItem']
+            },
+            {
+                path: 'tribes',
+                populate: ['creator owners locations verified']
+            }
+        ]);
+        
+        return result
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 
 const createOrUpdate = async (parent, args, context, info) => {
     const currentUserId = context.userId;
@@ -27,17 +56,37 @@ const createOrUpdate = async (parent, args, context, info) => {
     delete args.user._id
             
     try {                
-        const update = await User.findOneAndUpdate(
-            { _id: currentUserId }, 
-            { 
+        const result = await User.find({ 
+            $or: [
+                { _id: currentUserId }
+            ]    
+        });
+        
+        if (result.length === 0) {
+            const created = await User.create({
                 ...args.user,
                 ...(password && { password: hashedPassword })
-            }, 
-            { new: true }
-        ).populate('role tribes');
-                
-        return update;
+            });
+            
+            const populated = await User.findById(created._id).populate('role');
+            console.log({populated})
+            return populated;
+            
+        } else {
+            const updated = await User.findByIdAndUpdate(
+                currentUserId, 
+                {
+                    ...args.user,
+                    ...(password && { password: hashedPassword })
+                }
+            ).populate('role tribes pins');
+            
+            console.log({  updated })
+            
+            return updated;
+        }
     } catch (error) {
+        console.log(error)
         throw new Error(error);
     }
 }
@@ -58,7 +107,7 @@ const createAndGenerateBearer = async (parent, args, context, info) => {
             });
             
             const populatedUser = await User.findById(created._id);
-            const token = hashPassword({ userId: created._id })
+            const token = hashJwtToken({ userId: created._id })
             
             return {
                 created: populatedUser,
@@ -88,7 +137,7 @@ const updateRole = async (parent, args, context, info) => {
         User.updateOne()
                 
         await user.updateOne({ role: role._id });
-        const populatedUser = await User.findById(user._id).populate('role');
+        const populatedUser = await User.findById(user._id).populate('role tribes pins');
         return populatedUser;
     } catch (error) {
         throw new Error(error);
@@ -97,6 +146,7 @@ const updateRole = async (parent, args, context, info) => {
 
 module.exports = {
     find,
+    findById,
     createOrUpdate,
     createAndGenerateBearer,
     updateRole

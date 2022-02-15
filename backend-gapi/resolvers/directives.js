@@ -31,9 +31,7 @@ const authenticationDirectiveSchema = (schema, directiveName) => {
                     // The currrent users role, extracted from the bearer token
                     const { role: currentUserRole, roleConfig } = context;
                     const [{ requires: requiredRole }] = authDirective;
-                    
-                    console.log('directive activated');
-                    
+                                        
                     // Check if a token is provided
                     const tokenIsProvided = context && Object.keys(context).length > 0;
                     

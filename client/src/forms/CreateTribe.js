@@ -89,7 +89,7 @@ const CreateTribe = () => {
                     </div>
                 </div>
                 <Button 
-                    primary
+                    theme="primary"
                     loading={ createdTribeState.loading }
                 >Vereniging aanmaken</Button>
             </div>

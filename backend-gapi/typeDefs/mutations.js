@@ -14,6 +14,9 @@ module.exports = gql`
         writeUserAndLogin(user: UserInput): Login
         writeUserRole(userId: ID!, roleId: ID!): User @auth(requires: "ADMIN")
         
+        # OTP TOKENS
+        writeSignInToken(userId: ID!): String @auth(requires: "ADMIN")
+        
         # ORGANISATIONS
         writeOrganisation(organisation: OrganisationInput, id: ID): Organisation
         
@@ -22,8 +25,13 @@ module.exports = gql`
         
         # LOCATIONS
         writeLocation(location: LocationInput, id: ID): Location @auth(requires: "USER")
+        deleteLocation(id: ID): [ID] @auth(requires: "USER")
         
         # PRICING PACKAGES
         writePricingPackage(pricingPackage: PricingPackageInput, id: ID): LocationPricingPackage @auth(requires: "USER")
+        
+        # USER PIN
+        writeUserPin(pinItemId: ID, pinType: String): UserPin @auth(requires: "USER")
+        deleteUserPin(id: ID): [ID] @auth(requires: "USER")
     }
 `

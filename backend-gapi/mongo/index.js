@@ -7,4 +7,6 @@ module.exports = {
     Location: model('Location', require('./models/location')),
     Org: model('Organisation', require('./models/organisation')),
     PricingPackage: model('PricingPackage', require('./models/pricingPackage')),
+    UserPin: model('UserPin', require('./models/userPin')),
+    SignInToken: model('SignInToken', require('./models/signInToken')),
 }

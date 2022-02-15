@@ -1,28 +1,32 @@
 import classNames from 'classnames';
 import styled from 'styled-components';
 import { Icon } from '..';
+import { iconStyles } from '../../data/styles';
 import ButtonWrapper from '../ButtonWrapper';
 
 const NativeButton = styled.button`
 `
 
-const Button = ({ children, icon, primary, loading, ...otherProps }) => {
+const Button = ({ children, icon, loading, theme, outline, ...otherProps }) => {
     return (
         <NativeButton { ...otherProps }> 
             <ButtonWrapper { ...{ 
-                primary,
+                outline,
+                theme,
                 hasIcon: icon ? true : false,
-                loading
+                hasChildren: children ? true : false,
+                loading,
+                disabled: otherProps.disabled
             }}>
                 { icon && (
                     <div className={ classNames(loading && 'opacity-0')}>
-                        <Icon name={ icon } className="mr-2" color={ primary && '#fff' } />
+                        <Icon name={ icon } className={ classNames( children && 'mr-2')} color={ theme === 'primary' && '#fff' } />
                     </div>
                 )}
-                <div className={ classNames(loading && 'opacity-0')}>{ children }</div>
+                { children && <div className={ classNames('whitespace-nowrap', loading && 'opacity-0')}>{ children }</div>}
                 <div className={ classNames('absolute left-1/2 -translate-x-1/2', loading ? 'opacity-100' : 'opacity-0')}>
                     <div className="animate-spin">  
-                        <Icon name="loader-4" color="#fff" />
+                        <Icon name="loader-4" color="currentColor" className={ iconStyles[theme] || 'text-black' } />
                     </div>
                 </div>
             </ButtonWrapper>

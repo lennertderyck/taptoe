@@ -1,12 +1,16 @@
-import React, { isValidElement, useEffect } from 'react';
+import React, { isValidElement, useEffect, useMemo } from 'react';
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import {ErrorBoundary} from 'react-error-boundary'
 import { ErrorFallBackComponent } from '..';
 
-const Form = ({ children, onSubmit, defaultValues, test, loading, setValues }) => {
+const Form = ({ children, onSubmit, onChange, defaultValues, test, loading, setValues }) => {
     const methods = useForm({
         defaultValues
     });
+    
+    console.log('Form render')
+    
+    // const watchedValues = methods.watch();
     
     const handleSubmit = (values) => {
         if (test) {
@@ -24,6 +28,16 @@ const Form = ({ children, onSubmit, defaultValues, test, loading, setValues }) =
             })
         }
     }, [setValues])
+    
+    useEffect(() => {
+        const subscription = methods.watch((value) => {
+            if (onChange instanceof Function) {
+                onChange(value)
+            }
+        });
+        return () => subscription.unsubscribe();
+      }, []);
+
     
     return (
         <ErrorBoundary FallbackComponent={ ErrorFallBackComponent }>

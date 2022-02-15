@@ -7,7 +7,7 @@ import mapboxgl from '!mapbox-gl'; // eslint-disable-line
 import { formatMapboxLookup } from '../utils';
 import axios from 'axios';
 
-const CreateLocation = ({ tribe }) => {
+const CreateLocation = ({ location }) => {
     const navigate = useNavigate()
     const locationMarker = useRef();
     const locationPopup = useRef();
@@ -18,12 +18,17 @@ const CreateLocation = ({ tribe }) => {
     
     
     const handleLocationPinning = async ({ target, coords }) => {    
+        console.log(target, coords)
+        
         // check if there is already a marker or popup
         const mapContainsMarker = locationMarker.current instanceof mapboxgl.Marker
         const mapContainsPopup = locationPopup.current instanceof mapboxgl.Popup
         
         // remove marker if it exists
-        if (mapContainsPopup) locationPopup.current.remove()
+        if (mapContainsPopup) {
+            console.log('pin removed')
+            locationPopup.current.remove()
+        }
         
         // fetch address from coordinates
         const response = await axios({
@@ -35,12 +40,11 @@ const CreateLocation = ({ tribe }) => {
             }
         })
         
-        
-        
         // transform response to address object
         const formattedAddress = formatMapboxLookup(await response.data.features)
         delete formattedAddress.region
         
+        console.log('country', formattedAddress.country)
         if (formattedAddress.country !== 'België') {
             locationPopup.current = new mapboxgl.Popup({ closeOnClick: false })
                 .setLngLat([ coords.lng, coords.lat ])
@@ -61,6 +65,8 @@ const CreateLocation = ({ tribe }) => {
                 [`address.${ key }`]: value
             }
         }, {})
+        
+        console.log('formReadyValues', formReadyValues)
 
         setPinCoords(coords)
         setInheritedAddress(formReadyValues)
@@ -75,6 +81,8 @@ const CreateLocation = ({ tribe }) => {
             })
             .setLngLat([ coords.lng, coords.lat ])
             .addTo(target);
+            
+        console.log('marker', locationMarker.current)
     }
     
     useEffect(() => {
@@ -87,7 +95,9 @@ const CreateLocation = ({ tribe }) => {
     return (
         <Form
             defaultValues={{
-                tribe: tribe?.id
+                tribe: location?.tribe?.id,
+                name: location?.name,
+                address: location?.address,
             }}
             onSubmit={(formData) => {
                 createLocation({
@@ -130,8 +140,9 @@ const CreateLocation = ({ tribe }) => {
                 className="rounded-xl overflow-hidden mb-6"
                 showCurrentLocation
                 onClick={ handleLocationPinning }
+                showControls
             />
-            { locationMarker.current instanceof mapboxgl.Marker && (
+            { pinCoords && (
                 <>
                     <div className="grid gap-x-6 mb-4 grid-cols-12">
                         <div className="col-span-6">
@@ -155,12 +166,76 @@ const CreateLocation = ({ tribe }) => {
                     </div>
                 </>
             )}
+            
+            {/* <Input 
+                name="properties.capacity"
+                type="number"
+                label="Capaciteit"
+                defaultValue="0"
+                min="0"
+            />
+            
+            <Input 
+                name="properties.campfire"
+                type="checkbox"
+                label="Kampvuur toegelaten"
+            />
+            <Input 
+                name="properties.leaders_only"
+                type="checkbox"
+                label="Leidingsactiviteiten toegelaten"
+            />
+            <Input 
+                name="properties.leaders_only"
+                type="checkbox"
+                label="Bestek en border aanwezig"
+            />
+            
+            <Input 
+                name="properties.showers"
+                type="number"
+                label="Douchekoppen"
+                min="0"
+                defaultValue="1"
+            />
+            <Input 
+                name="properties.toilets"
+                type="number"
+                label="Wc's"
+                min="1"
+                defaultValue="1"
+            />
+            <Input 
+                name="properties.dayrooms"
+                type="number"
+                label="Leeflokalen"
+                min="0"
+            />
+            <Input 
+                name="properties.dayrooms"
+                type="number"
+                label="Slaapzalen"
+                min="0"
+            />
+            <Input 
+                name="properties.dayrooms"
+                type="number"
+                label="Bedden"
+                min="0"
+            />
+            <Input 
+                name="properties.bedsheets"
+                type="number"
+                label="Beddengoed"
+                min="0"
+            /> */}
+            
             <Button 
-                primary 
+                theme="primary" 
                 type="submit" 
                 className="mt-10 mx-auto"
                 loading={ createdLocationState.loading }
-            >Locatie aanmaken</Button>
+            >Locatie { location ? 'opslaan' : 'aanmaken' }</Button>
             
             {/* <div className="mt-6">
                 <h4 className="font-display font-medium text-lg text-gray-800 mb-2">adres overnemen van</h4>

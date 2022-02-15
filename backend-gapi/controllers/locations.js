@@ -36,7 +36,7 @@ const createOrUpdate = async (parent, args, context, info) => {
 
 const find = async (parent, args, context, info) => {
     const { filter } = args;
-    const parsedFilter = JSON.parse(filter);
+    const parsedFilter = filter ? JSON.parse(filter) : {};
     
     const locations = await Location.find({
         ...parsedFilter
@@ -55,8 +55,22 @@ const findById = async (parent, args, context, info) => {
     return location;
 }
 
+const deleteById = async (parent, args, context, info) => {
+    const { id } = args;
+    
+    console.log(args)
+    
+    try {
+        await Location.removeOne({ _id: id });
+        return [ id ];
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 module.exports = {
     createOrUpdate,
     find,
     findById,
+    deleteById
 }

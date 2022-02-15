@@ -6,8 +6,14 @@ import Wrapper from './Wrapper';
 import { useFormContext } from "react-hook-form";
 import LabelContainer from './LabelContainer';
 
-const Input = ({ icon, label, name = '', block, type, ...otherProps }) => {
-    const { register } = useFormContext();
+const Input = ({ icon, label, name = '', block, type, setValueAs, ...otherProps }) => {
+    const { register, unregister } = useFormContext();
+    
+    useEffect(() => (
+        () => {
+            unregister(name);
+        }
+    ), [])
     
     const disabled = otherProps.disabled || false
     const fieldProperties = {
@@ -15,7 +21,14 @@ const Input = ({ icon, label, name = '', block, type, ...otherProps }) => {
         type,
         disabled,
         ...otherProps,
-        ...register(name)
+        ...register(name, {
+            required: otherProps.required,
+            validate: otherProps.validate,
+            disabled: otherProps.disabled,
+            setValueAs,
+            shouldUnregister: true,
+            valueAsNumber: type === 'number'
+        })
     }
     
     const renderField = (type, otherProps) => {

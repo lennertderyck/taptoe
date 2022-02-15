@@ -1,4 +1,5 @@
 const { Schema } = require("mongoose");
+const softDelete = require('mongoosejs-soft-delete');
 
 const Location = new Schema({
     tribe: {
@@ -16,9 +17,6 @@ const Location = new Schema({
     updatedAt: {
         type: Date,
         default: Date.now
-    },
-    deleted_at: {
-        type: Date
     },
     address: {
         type: Object
@@ -56,5 +54,7 @@ const Location = new Schema({
         ref: 'PricingPackage'
     }]
 })
+
+Location.plugin(softDelete);
 
 module.exports = Location;

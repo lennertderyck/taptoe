@@ -1,4 +1,5 @@
 const { Schema } = require("mongoose");
+const mongooseSoftDelete = require('mongoose-delete');
 
 const Organisation = new Schema({
     name: {
@@ -36,5 +37,6 @@ Organisation.virtual('tribes', {
     localField: '_id',
     foreignField: 'organisation',
 })
+
 
 module.exports = Organisation;

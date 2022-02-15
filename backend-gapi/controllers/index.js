@@ -7,4 +7,6 @@ module.exports = {
     orgsController: require('./orgs'),
     applicationController: require('./application'),
     pricingPackageController: require('./pricingPackages'),
+    userPinsController: require('./userPins'),
+    signInTokensController: require('./signInTokens'),
 }
