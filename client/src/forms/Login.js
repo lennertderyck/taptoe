@@ -4,7 +4,7 @@ import { useLazyQuery } from '@apollo/client';
 import { QUERY } from '../graphql';
 import { useAuth } from '../hooks';
 
-const Login = ({ otpToken }) => {
+const Login = ({ otpToken, onReady }) => {
     const [ fetch, { data, loading, error }] = useLazyQuery(otpToken ? QUERY.OTP_LOGIN : QUERY.LOGIN);
     const { credentials, login } = useAuth()
     
@@ -15,6 +15,12 @@ const Login = ({ otpToken }) => {
             }
         })
     }, [ otpToken ])
+    
+    useEffect(() => {
+        if ((!loading && (data || error)) && onReady instanceof Function) {
+            onReady({ data, error })
+        }
+    }, [loading])
     
     useEffect(() => {
         if (data) {

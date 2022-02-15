@@ -30,7 +30,7 @@ const LoginModule = () => {
                     subtitle="Aanmelden of registreren"
                     title="Meld je aan om verder te gaan"
                 />
-                <Forms.Login otpToken={ otpToken } />
+                <Forms.Login otpToken={ otpToken } onReady={() => setOtpToken()} />
             </Container>
         </BaseLayout>
     )
