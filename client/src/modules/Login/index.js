@@ -6,6 +6,7 @@ import { useAuth } from '../../hooks';
 import { BaseLayout } from '../../layouts';
 
 const LoginModule = () => {
+    const [ loginResponse, setLoginResponse ] = useState()
     const [ otpToken, setOtpToken ] = useState();
     const [ searchParams, setSearchParams ] = useSearchParams()
     const { credentials } = useAuth()
@@ -23,6 +24,12 @@ const LoginModule = () => {
         if (credentials) navigate('/', { replace: true })
     }, [credentials])
     
+    
+    if (otpToken && loginResponse?.error) return <div>
+        <h3>Deze code was niet geldig</h3>
+        <p>Vraag bij de eigenaar een nieuwe code aan.</p>
+    </div>;
+    
     return (
         <BaseLayout>
             <Container>
@@ -30,7 +37,7 @@ const LoginModule = () => {
                     subtitle="Aanmelden of registreren"
                     title="Meld je aan om verder te gaan"
                 />
-                <Forms.Login otpToken={ otpToken } onReady={() => setOtpToken()} />
+                <Forms.Login otpToken={ otpToken } onReady={ setLoginResponse } />
             </Container>
         </BaseLayout>
     )

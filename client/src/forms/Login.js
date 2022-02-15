@@ -28,12 +28,7 @@ const Login = ({ otpToken, onReady }) => {
         }
     }, [data]);
     
-    if (otpToken && error) return <div>
-        <h3>Deze code was niet geldig</h3>
-        <p>Vraag bij de eigenaar een nieuwe code aan.</p>
-    </div>;
-    
-    else return (
+    return (
         <Form
             onSubmit={(v) => fetch({
                 variables: {
