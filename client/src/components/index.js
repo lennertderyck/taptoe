@@ -25,3 +25,5 @@ export { default as PinButton } from './PinButton';
 export { default as ButtonGroup } from './ButtonGroup';
 export { default as SpotlightSearch } from './SpotlightSearch';
 export { default as Devider } from './Devider';
+export { default as OtpTokenPopup } from './OtpTokenPopup';
+export { default as SymbolButton } from './SymbolButton';

@@ -57,9 +57,7 @@ const findById = async (parent, args, context, info) => {
 
 const deleteById = async (parent, args, context, info) => {
     const { id } = args;
-    
-    console.log(args)
-    
+        
     try {
         await Location.removeOne({ _id: id });
         return [ id ];

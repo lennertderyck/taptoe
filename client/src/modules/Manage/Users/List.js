@@ -1,10 +1,12 @@
 import { useQuery } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Icon, List } from '../../../components';
+import { Button, ButtonGroup, Form, Icon, Input, List, OtpTokenPopup } from '../../../components';
 import { QUERY } from '../../../graphql';
 import { useAuth } from '../../../hooks';
+import Popup from 'reactjs-popup';
 
 const UsersList = () => {
+    const [ otpRequestState, setOtpRequestState ] = useState(false)
     const { user: currentUser } = useAuth()
     const selectAllCheckboxRef = useRef()
     const [ selectedUsers, setSelectedUsers ] = useState([]);
@@ -78,24 +80,36 @@ const UsersList = () => {
                                 data={ user }
                                 selected={ selectedUsers.find(s => s.id === user.id )}
                             >
-                                <h3 className="text-gray-700">
-                                    { user.firstName } { user.lastName } 
-                                    
-                                </h3>
-                                <h4 className="lowercase font-display text-gray-500 ">
-                                    {( currentUser.id === user.id ) && <>
-                                        <Icon name="check-double" className="text-tt-emerald-500 mr-1 inline" color="currentColor" />
-                                        <span className="text-tt-emerald-500 font-display">huidige gebruiker</span>
-                                       <span> &nbsp; | &nbsp; </span>
-                                    </>}
-                                    <span className="font-normal">{ user.email }</span> – <span>{ user.role.label }</span>
-                                    
-                                </h4>
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h3 className="text-gray-700">
+                                            { user.firstName } { user.lastName } 
+                                        </h3>
+                                        <h4 className="lowercase font-display text-gray-500 ">
+                                            {( currentUser.id === user.id ) && <>
+                                                <Icon name="check-double" className="text-tt-emerald-500 mr-1 inline" color="currentColor" />
+                                                <span className="text-tt-emerald-500 font-display">huidige gebruiker</span>
+                                            <span> &nbsp; | &nbsp; </span>
+                                            </>}
+                                            <span className="font-normal">{ user.email }</span> – <span>{ user.role.label }</span>
+                                        </h4>
+                                    </div>
+                                    <div>
+                                        <ButtonGroup>
+                                            <Button icon="settings-4" />
+                                            <Button icon="lock-password" onClick={() => setOtpRequestState(user)} />
+                                        </ButtonGroup>
+                                    </div>
+                                </div>
                             </ListItem>
                         ))}
                     </>
                 )}
             </List>
+            <OtpTokenPopup 
+                user={ otpRequestState }
+                onClose={() => setOtpRequestState(false)}
+            />
         </>
     )
 }

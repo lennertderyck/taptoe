@@ -112,6 +112,43 @@ export default {
         }
     `,
     
+    TRIBES: gql`
+        {
+            readTribes {
+                id
+                name
+                email
+                website
+                verified {
+                  id
+                  name
+                }
+                owners {
+                  firstName
+                  lastName
+                }
+                address {
+                    street
+                    number
+                    city
+                    zip
+                    country
+                }
+                locations {
+                    id
+                    name
+                    address {
+                        street
+                        number
+                        city
+                        zip
+                        country
+                    }
+                }
+            }
+        }
+    `,
+    
     AVAILABLE_TRIBES_BY_OWNER: gql`
         query readTribesByOwnerID {
             readTribesByOwnerID {

@@ -115,7 +115,7 @@ const LocationDetailModule = () => {
                                     <div className="col-span-1">
                                         <h4 className="text-gray-500"><strong>Adres</strong></h4>
                                         { locationData.address && (
-                                            <a href={ formatGoogleMapsSearchLink(locationData.address) } target="_blank" rel="noopener" className="">
+                                            <a href={ formatGoogleMapsSearchLink(locationData.address) } target="_blank" rel="noopener">
                                                 <p className="underline text-gray-500">{ locationData.address.street } { locationData.address.number }</p>
                                                 <p className="underline text-gray-500">{ locationData.address.zip } { locationData.address.city }</p>
                                                 <small className="font-display lowercase no-underline text-gray-400 flex items-center">

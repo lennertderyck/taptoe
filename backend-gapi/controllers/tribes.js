@@ -51,9 +51,8 @@ const createOrUpdate = (...params) => protectedRoute(
 
 const find = async (parent, args, context, info) => {
     // TODO: implement user role based populators
-    const tribes = Tribe.find().populate([
-        "creator owners verified locations"
-    ])
+    const tribes = Tribe.find().populate("creator owners verified locations")
+
     return await tribes;
 }
 

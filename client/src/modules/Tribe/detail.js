@@ -43,7 +43,7 @@ const TribeDetailModule = () => {
             <Container>
                 <PageHeader
                     subtitle={<h4 className="font-display font-medium text-xl lowercase mb-3 text-tt-blue-500 flex items-center">
-                        <span>{ tribeData?.verified?.type ||  'Organisatie' }</span>
+                        <span>{ tribeData?.verified?.type || 'Organisatie' }</span>
                         <button 
                             className="ml-2 p-2 hover:bg-gray-100 rounded-lg" 
                             onClick={() => openHelp('faq-local-6', true)}

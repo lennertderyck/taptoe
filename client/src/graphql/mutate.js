@@ -45,10 +45,16 @@ export default {
   `,
   
   CREATE_OR_UPDATE_ROLE: gql`
-  mutation writeRole($role: UserRoleInput!, $id: ID) {
-    writeRole(role: $role, id: $id) {
-      id
+    mutation writeRole($role: UserRoleInput!, $id: ID) {
+      writeRole(role: $role, id: $id) {
+        id
+      }
     }
-  }
-  `
+  `,
+  
+  CREATE_OTP_TOKEN: gql`
+    mutation writeSignInToken($userId: ID!) {
+      writeSignInToken(userId: $userId)
+    }
+  `,
 }

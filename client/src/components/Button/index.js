@@ -7,7 +7,7 @@ import ButtonWrapper from '../ButtonWrapper';
 const NativeButton = styled.button`
 `
 
-const Button = ({ children, icon, loading, theme, outline, ...otherProps }) => {
+const Button = ({ children, icon, iconAfter, loading, theme, outline, ...otherProps }) => {
     return (
         <NativeButton { ...otherProps }> 
             <ButtonWrapper { ...{ 
@@ -24,6 +24,11 @@ const Button = ({ children, icon, loading, theme, outline, ...otherProps }) => {
                     </div>
                 )}
                 { children && <div className={ classNames('whitespace-nowrap', loading && 'opacity-0')}>{ children }</div>}
+                {( iconAfter && !loading ) && (
+                    <div className={ classNames(loading && 'opacity-0')}>
+                        <Icon name={ iconAfter } className={ classNames( children && 'ml-2')} color={ theme === 'primary' && '#fff' } />
+                    </div>
+                )}
                 <div className={ classNames('absolute left-1/2 -translate-x-1/2', loading ? 'opacity-100' : 'opacity-0')}>
                     <div className="animate-spin">  
                         <Icon name="loader-4" color="currentColor" className={ iconStyles[theme] || 'text-black' } />
