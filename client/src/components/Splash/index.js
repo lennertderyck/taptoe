@@ -10,7 +10,7 @@ const Splash = ({ children, force }) => {
     
     useEffect(() => {
         if (process.env.NODE_ENV !== 'development') {
-            fetch('http://taptoe-socket.herokuapp.com/status')
+            fetch('https://taptoe-socket.herokuapp.com/status')
                 .then(res => res.json())
                 .then(() => {
                     setLoading(false)
