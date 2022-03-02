@@ -9,4 +9,5 @@ module.exports = {
     pricingPackageController: require('./pricingPackages'),
     userPinsController: require('./userPins'),
     signInTokensController: require('./signInTokens'),
+    authScopesController: require('./authScopes'),
 }

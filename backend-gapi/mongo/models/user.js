@@ -23,7 +23,7 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Role',
         default: '61eec55b38e0766ab63c049c'
-    },
+    }
 })
 
 userSchema.virtual('tribes', {

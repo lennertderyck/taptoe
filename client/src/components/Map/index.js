@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, forwardRef } from 'react';
 import useAxios from 'axios-hooks'
 import PropTypes from 'prop-types';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
@@ -17,7 +17,7 @@ const MapContainer = styled.div`
 
 const currentLocationZoom = 10;
 
-const Map = ({ children, className, height = '400px', onClick, geoCoding = false, showCurrentLocation, showControls, render, initialstate, ...otherProps }) => {
+const Map = forwardRef(({ children, className, height = '400px', onClick, geoCoding = false, showCurrentLocation, showControls, render, initialstate, ...otherProps }, forwardedRef) => {
     const [ centered, setCentered ] = useState();
     const [ locationState, fetchLocation ] = useLocation({ lazy: true, enableHighAccuracy: true, maximumAge: 300000 });
     const mapContainer = useRef(null);
@@ -111,6 +111,8 @@ const Map = ({ children, className, height = '400px', onClick, geoCoding = false
             zoom: zoom
         });
         
+        if (!!forwardedRef) forwardedRef.current = map.current;
+        
         map.current.setStyle(themes.light)
         map.current.on('click', handleClick)
         map.current.on('drag', handleMapDrag);
@@ -155,6 +157,6 @@ const Map = ({ children, className, height = '400px', onClick, geoCoding = false
             )}
         </MapContainer>
     );
-}
+})
 
 export default Map;

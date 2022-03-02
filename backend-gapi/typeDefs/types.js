@@ -25,6 +25,7 @@ module.exports = gql`
     name: String!
     label: String!
     includes: [UserRole]
+    scopes: [AuthScope]
   }
   
   type User {
@@ -38,6 +39,15 @@ module.exports = gql`
     role: UserRole!
     tribes: [Tribe]
     pins: [UserPin]
+  }
+  
+  type AuthScope {
+    id: ID!
+    name: String!
+    createdAt: String!
+    updatedAt: String!
+    description: String
+    creator: User
   }
   
   type Login {

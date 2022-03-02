@@ -14,6 +14,10 @@ module.exports = gql`
         writeUserAndLogin(user: UserInput): Login
         writeUserRole(userId: ID!, roleId: ID!): User @auth(requires: "ADMIN")
         
+        # AUTH SCOPES
+        writeAuthScope(authScope: AuthScopeInput!, id: ID): AuthScope @auth(requires: "ADMIN")
+        deleteAuthScope(id: ID!): AuthScope @auth(requires: "ADMIN")
+        
         # OTP TOKENS
         writeSignInToken(userId: ID!): String @auth(requires: "ADMIN")
         
@@ -21,7 +25,7 @@ module.exports = gql`
         writeOrganisation(organisation: OrganisationInput, id: ID): Organisation
         
         # TRIBES
-        writeTribe(tribe: TribeInput): Tribe @auth(requires: "USER")
+        writeTribe(tribe: TribeInput, id: ID): Tribe @auth(requires: "USER")
         
         # LOCATIONS
         writeLocation(location: LocationInput, id: ID): Location @auth(requires: "USER")

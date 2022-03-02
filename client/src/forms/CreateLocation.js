@@ -127,7 +127,6 @@ const CreateLocation = ({ location }) => {
                     name="tribe" 
                     label="Tribe" 
                     type="select"
-                    disabled={ data?.readTribesByOwnerID?.length <= 1}
                 >
                     { data?.readTribesByOwnerID?.map(item => (
                         <option key={ item.id } value={ item.id }>{ item.name }</option>

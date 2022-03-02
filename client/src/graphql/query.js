@@ -70,6 +70,17 @@ export default {
         }
     `,
     
+    VALIDATE_USER: gql`
+        query validateUser($validationTypes: [UserValidationType!], $value: String!, $limit: Int = 4) {
+            validateUser(validationTypes: $validationTypes, value:$value, limit: $limit) {
+                id
+                firstName
+                lastName
+                email
+            }
+        }
+    `,
+    
     TRIBE_BY_ID: gql`
         query tribeById($id: ID!) {
             readTribe(id: $id) {
@@ -232,6 +243,11 @@ export default {
                     name
                 }
             }
+            readAuthScopes {
+                id
+                name
+                description
+            }
         }
     `,
     
@@ -259,6 +275,16 @@ export default {
                     name
                     label
                 }
+            }
+        }
+    `,
+    
+    AUTH_SCOPES: gql`
+        {
+            readAuthScopes {
+                id
+                name
+                description
             }
         }
     `,

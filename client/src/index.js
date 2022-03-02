@@ -5,10 +5,11 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import App from './App';
+import { register as registerServiceWorker } from './serviceWorkerRegistration';
 
 import './sass/index.scss'
 import { AuthProvider } from './contexts/AuthContext';
-import { AccountModule, LocationDetailModule, LocationEditModule, LocationModule, LoginModule, ManageModule, ManageOverviewModule, ManageTribesModule, ManageUserRolesModule, ManageUsersModule, ManageWrapperModule, NewLocationModule, NewTribeModule, TribeDetailModule, TribeModule } from './modules';
+import { AccountModule, AuthScopesModule, LocationDetailModule, LocationEditModule, LocationModule, LoginModule, ManageModule, ManageOverviewModule, ManageTribesModule, ManageUserRolesModule, ManageUsersModule, ManageWrapperModule, NewLocationModule, NewTribeModule, TribeDetailModule, TribeModule } from './modules';
 import client from './graphql/client';
 import { HelpSidebar, Icon, Splash, SpotlightSearch } from './components';
 import { HelpProvider } from './contexts/HelpContext';
@@ -16,10 +17,14 @@ import { SplashProvider, AppContextProvider} from './contexts';
 import { ReactComponent as Logo } from './assets/logo.svg';
 import { ReactComponent as LogoJung } from './assets/logos_credits/logo_jung_hinged.svg';
 
+const url = new URL(window.location);
+const forceParam = url.searchParams.get('force');
+const devParam = url.searchParams.get('dev');
+const forcedDevMode = forceParam === '' || forceParam === 'dev' || devParam === '' ? true : false;
 
 ReactDOM.render(
   <React.StrictMode>
-    { process.env.NODE_ENV === 'production' ? (
+    { process.env.NODE_ENV === 'production' || !forcedDevMode ? (
       <div className="h-full w-full flex flex-col items-center justify-center bg-[#E7ECEB]">
         <div className="flex-1 flex flex-col items-center justify-center p-8">
           <Logo width="120px" className="mx-auto mb-4" />
@@ -67,6 +72,7 @@ ReactDOM.render(
                       <Route path="users">
                         <Route index element={<ManageUsersModule />} />
                         <Route path="roles" element={<ManageUserRolesModule />} />
+                        <Route path="auth-scopes" element={<AuthScopesModule />} />
                       </Route>
                     </Route>
                   </Route>
@@ -85,3 +91,5 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+registerServiceWorker();

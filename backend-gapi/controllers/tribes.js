@@ -1,6 +1,7 @@
 const { AuthenticationError } = require("apollo-server-core");
 const { Tribe, Location } = require("../mongo");
 const { protectedRoute } = require("../utils/credentials");
+const { resolveTribeValidationType } = require("../utils/tools");
 
 const createOrUpdate = (...params) => protectedRoute(
     params,
@@ -10,7 +11,7 @@ const createOrUpdate = (...params) => protectedRoute(
         const { id } = args.tribe;
         
         try {
-            const tribe = await Tribe.findById(id)
+            const tribe = await Tribe.findById(args.id)
             
             // if no tribe was found, create a new one
             if (!tribe) {
@@ -95,9 +96,34 @@ const findById = (...params) => protectedRoute(
     }
 )
 
+const validate = async (parent, args, context, info) => {
+    const { validationTypes, value, limit } = args;
+    
+    const resolvedSearchPropterties = validationTypes.map(resolveTribeValidationType).flat();
+    const resolvedQuery = resolvedSearchPropterties.map(property => (
+        {[property]: {
+            $regex: value,
+            $options: 'ig'
+        }})
+    );
+    const limitResults = limit === 0 ? undefined : limit;
+    
+    
+    try {
+        const results = await Tribe.find({
+            $or: resolvedQuery
+        }).limit(limitResults);
+        
+        return results;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 module.exports = {
     createOrUpdate,
     findByOwnerId,
     findById,
-    find
+    find,
+    validate
 }

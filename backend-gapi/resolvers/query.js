@@ -6,7 +6,7 @@ const { User, Role  } = require('../mongo')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server');
-const { tribeController, userController, authController, rolesController, locationsController, orgsController, applicationController, userPinsController } = require('../controllers');
+const { tribeController, userController, authController, rolesController, locationsController, orgsController, applicationController, userPinsController, authScopesController } = require('../controllers');
 const { JWT_SECRET } = process.env;
 const dayjs = require('dayjs');
 
@@ -26,14 +26,19 @@ module.exports = {
         // ROLES
         readRoles: rolesController.findAll,
         
+        // AUTH SCOPES
+        readAuthScopes: authScopesController.findAll,
+        
         // USERS
         readUser: userController.findById,
         readUsers: userController.find,
+        validateUser: userController.validate,
         
         // TRIBES
         readTribe: tribeController.findById,
         readTribes: tribeController.find,
         readTribesByOwnerID: tribeController.findByOwnerId,
+        validateTribe: tribeController.validate,
         
         // LOCATIONS
         readLocations: locationsController.find,

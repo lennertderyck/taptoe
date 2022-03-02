@@ -21,7 +21,7 @@ const ManageWrapperModule = () => {
                                     <LinkButton 
                                         to={ module.path } 
                                         icon={ module.icon } 
-                                        className={({ isActive }) => classNames(
+                                        activeClassName={({ isActive }) => classNames(
                                             'w-full flex items-center justify-center'
                                         )}
                                     >

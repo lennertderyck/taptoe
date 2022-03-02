@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import classnames from 'classnames';
 import { listContext } from '.';
 
-const Item = ({ children, className, selectable, id, data, selected, ...otherProps }) => {
+const Item = ({ children, className, contentClassName, selectable, id, data, selected, ...otherProps }) => {
     const { changeItem } = useContext(listContext)
     const checkboxRef = useRef()
     
@@ -50,7 +50,7 @@ const Item = ({ children, className, selectable, id, data, selected, ...otherPro
             {( selectable && id && data ) && <div className="mr-3">
                 <input type="checkbox" onInput={ handleCheckboxInput } ref={ checkboxRef } />
             </div>}
-            <div className="flex-1">
+            <div className={ classnames(contentClassName, 'flex-1')}>
                 { children }
             </div>
         </div>

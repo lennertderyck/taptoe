@@ -2,9 +2,21 @@ import React, { useEffect } from 'react';
 import { Icon } from '..';
 import Field from './fieldTypes/input';
 import Select from './fieldTypes/select';
+import Checkbox from './fieldTypes/checkbox';
 import Wrapper from './Wrapper';
 import { useFormContext } from "react-hook-form";
 import LabelContainer from './LabelContainer';
+
+const InputWrapper = ({ children, block, disabled, icon }) => {
+    return (
+        <Wrapper
+            {...{ block, disabled }}
+        >
+            { icon && <Icon name={ icon } color="#000" className="mr-4" />}
+            { children }
+        </Wrapper>
+    )
+}
 
 const Input = ({ icon, label, name = '', block, type, setValueAs, ...otherProps }) => {
     const { register, unregister } = useFormContext();
@@ -20,6 +32,7 @@ const Input = ({ icon, label, name = '', block, type, setValueAs, ...otherProps 
         block, 
         type,
         disabled,
+        icon,
         ...otherProps,
         ...register(name, {
             required: otherProps.required,
@@ -33,15 +46,26 @@ const Input = ({ icon, label, name = '', block, type, setValueAs, ...otherProps 
     
     const renderField = (type, otherProps) => {
         return {
-            'select': <Select
-                { ...fieldProperties }
-                className="text-lg font-body placeholder:text-gray-400"
-            >{ otherProps.children }</Select>
+            'select': (
+                <InputWrapper { ...fieldProperties }>
+                    <Select
+                        { ...fieldProperties }
+                        className="text-lg font-body placeholder:text-gray-400"
+                    >{ otherProps.children }</Select>
+                </InputWrapper>
+            ),
+            'checkbox': (
+                <Checkbox 
+                    { ...fieldProperties }
+                />
+            )
         }[type] || (
-            <Field
-                { ...fieldProperties }
-                className="text-lg font-body placeholder:text-gray-400"
-            />
+            <InputWrapper { ...fieldProperties }>
+                <Field
+                    { ...fieldProperties }
+                    className="text-lg font-body placeholder:text-gray-400"
+                />
+            </InputWrapper>
         )
     }
     
@@ -50,15 +74,7 @@ const Input = ({ icon, label, name = '', block, type, setValueAs, ...otherProps 
             {...{ block }}
         >
             { label && <h4 className="mb-2">{ label }</h4>}
-            <Wrapper
-                {...{ block, disabled }}
-            >
-                { icon && <Icon name={ icon } color="#000" className="mr-4" />}
                 { renderField(type, otherProps) }
-            </Wrapper>
-            {/* {meta.touched && meta.error && (
-                <div className="error">{meta.error}</div>
-            )} */}
         </LabelContainer>
     )
 }

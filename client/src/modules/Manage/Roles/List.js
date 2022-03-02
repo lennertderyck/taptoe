@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
-import { AddButton, Button, Container, Icon, List, PageHeader, RoleSelector } from '../../../components';
+import { AddButton, Button, Container, Icon, List, Padded, PageHeader, RoleSelector } from '../../../components';
 import * as Form from '../../../forms';
 import { QUERY } from '../../../graphql';
 
@@ -28,22 +28,24 @@ const RoleEditor = () => {
                                 { roleEditMode !== role.id && <Button icon="settings-4" theme="minimal" onClick={() => setRoleEditMode(role.id)} /> }
                             </div>
                         </div>
-                        { roleEditMode === role.id && <div className="mt-4">
-                            <Form.CreateRole
-                                role={{
-                                    id: role.id,
-                                    name: role.name,
-                                    label: role.label,
-                                    includes: [role.includes[0]?.id]
-                                }}
-                                onReset={() => setRoleEditMode(false)} 
-                                onReady={() => {
-                                    setRoleEditMode(false)
-                                    rolesState.refetch()
-                                }}
-                                test
-                            />
-                        </div>}
+                        { roleEditMode === role.id && <Padded lg className="mt-4 border-2 border-gray-200 rounded-2xl">
+                            <div>
+                                <Form.CreateRole
+                                    role={{
+                                        id: role.id,
+                                        name: role.name,
+                                        label: role.label,
+                                        includes: [role.includes[0]?.id]
+                                    }}
+                                    onReset={() => setRoleEditMode(false)} 
+                                    onReady={() => {
+                                        setRoleEditMode(false)
+                                        rolesState.refetch()
+                                    }}
+                                    test
+                                />
+                            </div>    
+                        </Padded>}
                     </ListItem>
                 ))}
                 { roleEditMode !== true && (

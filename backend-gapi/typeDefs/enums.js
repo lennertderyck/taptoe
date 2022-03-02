@@ -32,4 +32,16 @@ module.exports = gql`
     USER
     GUEST
   }
+  
+  enum UserValidationType {
+    EMAIL
+    FIRSTNAME
+    LASTNAME
+    NAME
+  }
+  
+  enum TribeValidationType {
+    NAME
+    EMAIL
+  }
 `

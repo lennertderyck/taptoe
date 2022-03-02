@@ -79,7 +79,23 @@ const localArticles = [
         `,
         relatedArticles: ['faq-local-4', 'faq-local-5'],
         articleGroups: []
-    }
+    },
+    {
+        id: 'faq-local-7',
+        title: 'Een tribe overdragen',
+        content: `
+            <p>In sommige gevallen is het nodig om de eigenaar van een tribe te wijzigen. Omdat de huidige beheerder stopt binnen de werking, vanwege misbruik, ... Daarom bieden we de mogelijk om een tribe door te geven aan een andere geregistreerde gebruiker.</p>
+            <p>Let wel op, dit heeft enkele gevolgen!</p>
+            <ul>
+                <li>Deze actie kan enkel ongedaan worden gemaakt doordat de nieuwe eigenaar de tribe terug overzet naar de vorige eigenaar.</li>
+                <li>De huidige eigenaar en alle medebeheerders van desbetreffende tribe verliezen toegang tot alle niet-publiekelijke data doordat zij verwijderd worden als beheerder. Deze accounts worden uiteraard niet verwijderd.</li>
+                <li>De verificatie van de tribe blijft ongewijzigd. Enkel bij sprake van misbruik kan het zijn dat er maatregelen genomen worden die resulteren in het ongedaan maken van de verificatie.</li>
+            </ul>
+        `,
+        relatedArticles: [],
+        articleGroups: []
+    },
+    
 ]
 
 export {

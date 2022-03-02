@@ -48,9 +48,31 @@ module.exports = gql`
     readUsers: [User] @auth(requires: "ADMIN")
     
     """
+      Check if a user exists by various criteria.
+    """
+    validateUser(
+      "The fields to validate the user by."
+      validationTypes: [UserValidationType!], 
+      "The value to validate against."
+      value: String!, 
+      """
+        Limit the amount of results. 
+        When set to 0, no limit is applied. 
+        Default is 4.
+      """
+      limit: Int = 4
+      
+      "The ID of users to exclude from the results."
+      exclude: [ID]
+    ): [User]
+    
+    """
       Verify if a users' token is still valid
     """
     verifyToken: User
+    
+    # AUTH SCOPES
+    readAuthScopes: [AuthScope]
     
     # TRIBES
     
@@ -70,6 +92,22 @@ module.exports = gql`
       The returned data will be dependent on the user's role.
     """
     readTribesByOwnerID: [Tribe]
+    
+    """
+    """
+    validateTribe(
+      "The fields to validate the tribe by."
+      validationTypes: [TribeValidationType!]
+      
+      "The value to validate against."
+      value: String!
+      
+      "Limit the amount of results. When set to 0, no limit is applied. Default is 4."
+      limit: Int = 4
+      
+      "The ID of tribes to exclude from the results."
+      exclude: [ID]
+    ): [Tribe]
     
     # LOCATIONS
     readLocation(id: ID!): Location

@@ -57,4 +57,24 @@ export default {
       writeSignInToken(userId: $userId)
     }
   `,
+  
+  CREATE_OR_UPDATE_AUTHSCOPE: gql`
+    mutation writeAuthScope($authScope: AuthScopeInput!, $id: ID) {
+      writeAuthScope(authScope: $authScope, id: $id) {
+        id
+        name
+        description
+      }
+    }
+  `,
+  
+  DELETE_AUTHSCOPE: gql`
+    mutation deleteAuthScope($id: ID!) {
+      deleteAuthScope(id: $id) {
+        id
+        name
+        description
+      }
+    }
+  `,
 }

@@ -20,8 +20,8 @@ const createOrUpdate = async (parent, args, context, info) => {
                 id, 
                 role, 
                 { new: true }
-            ).populate('includes');
-            console.log({ updated });
+            ).populate('includes scopes');
+
             return updated;
         }
     } catch (error) {
@@ -31,7 +31,7 @@ const createOrUpdate = async (parent, args, context, info) => {
 }
 
 const findAll = async (parent, args, context, info) => {
-    const role = await Role.find().populate('includes');
+    const role = await Role.find().populate('includes scopes');
     return role;
 }
 

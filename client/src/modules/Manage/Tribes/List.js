@@ -1,20 +1,47 @@
-import { useQuery } from '@apollo/client';
-import React, { useState } from 'react';
-import { QUERY } from '../../../graphql';
-import { Button, ButtonGroup, Icon, List, SymbolButton } from '../../../components';
+import { useMutation, useQuery } from '@apollo/client';
+import React, { useEffect, useState } from 'react';
+import { MUTATE, QUERY } from '../../../graphql';
+import { Button, ButtonGroup, Icon, Input, List, SymbolButton, VerifySelector, Form } from '../../../components';
 import { Link, useNavigate } from 'react-router-dom';
 
 const TribesList = () => {
+    const [ tribeSettings, setTribeSettings ] = useState();
     const [ tribeDetail, setTribeDetail ] = useState(false)
+    const [ updateTribe, updateTribeState ] = useMutation(MUTATE.CREATE_OR_UPDATE_TRIBE)
     const tribesState = useQuery(QUERY.TRIBES)
     
     const handleTribeDetailView = (id) => {
+        setTribeSettings()
         if (tribeDetail === id) {
             setTribeDetail(false)
         } else {
             setTribeDetail(id)
         }
     }
+    
+    const handleTribeSettingsView = (id) => {
+        setTribeDetail()
+        if (tribeSettings === id) {
+            setTribeSettings(false)
+        } else {
+            setTribeSettings(id)
+        }
+    }
+    
+    const handleVerification = (tribeId, verificationId) => {
+        updateTribe({
+            variables: {
+                tribe: {
+                    id: tribeId,
+                    verified: verificationId
+                },
+            }
+        })
+    }
+    
+    useEffect(() => {
+        if (updateTribeState?.data?.readTribes) tribesState.refetch()
+    }, [updateTribeState?.data])
     
     return (
         <List>
@@ -37,11 +64,38 @@ const TribesList = () => {
                                 </div>
                                 <div>
                                     <ButtonGroup>
-                                        <Button icon="more" onClick={() =>handleTribeDetailView(tribe.id)} />
+                                        <ButtonGroup dividerHidden>
+                                            <Button icon="settings-4" onClick={() => handleTribeSettingsView(tribe.id)} />
+                                            <Button icon="more" onClick={() => handleTribeDetailView(tribe.id)} />
+                                        </ButtonGroup>
                                         <Button icon="arrow-right-up" onClick={() => window.open('/tribes/' + tribe.id)} />
                                     </ButtonGroup>
                                 </div>
                             </div>
+                            { tribeSettings === tribe.id && (
+                                <div className="mt-6">
+                                    <Form
+                                        onSubmit={(formData) => {
+                                            handleVerification(tribe.id, formData.verified)
+                                        }}
+                                        defaultValues={{
+                                            verified: tribe?.verified?.id
+                                        }}
+                                    >
+                                        {(values, methods) => (
+                                            <>
+                                                <h4 className="mb-2">Verificatie</h4>
+                                                <div className="flex">
+                                                    <VerifySelector setValueAs={ v => v === 'none' ? undefined : v } />
+                                                    { tribe?.verified?.id !== values?.verified && (
+                                                        <Button type="submit" theme="primary" className="ml-3">{ values?.verified === 'none' ? 'Verificatie verwijderen' : 'Verifieren' }</Button>
+                                                    )}
+                                                </div>
+                                            </>
+                                        )}
+                                    </Form>
+                                </div>
+                            )}
                             { tribeDetail === tribe.id && (
                                 <div className="mt-3 text-gray-700 p-6 rounded-xl border-2 border-gray-200">
                                     <div className="grid grid-cols-12 gap-6">

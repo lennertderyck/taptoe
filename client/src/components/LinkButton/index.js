@@ -11,8 +11,10 @@ const NativeLink = tw(NavLink)`
 `;
 
 const LinkButton = ({ children, icon, loading, theme, outline, to = '', className, activeClassName, ...otherProps }) => {
+    console.log({ className })
+    
     return (
-        <NativeLink {...{ to, ...otherProps }}> 
+        <NativeLink className={ className } {...{ to, ...otherProps }}> 
             <ButtonWrapper { ...{ 
                 outline,
                 theme,

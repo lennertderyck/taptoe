@@ -9,4 +9,5 @@ module.exports = {
     PricingPackage: model('PricingPackage', require('./models/pricingPackage')),
     UserPin: model('UserPin', require('./models/userPin')),
     SignInToken: model('SignInToken', require('./models/signInToken')),
+    AuthScope: model('AuthScope', require('./models/authScope')),
 }

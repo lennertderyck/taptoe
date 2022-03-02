@@ -20,7 +20,6 @@ const ManageModule = () => {
     
     return (
         <BaseLayout>
-            
             <Outlet />
         </BaseLayout>
     )

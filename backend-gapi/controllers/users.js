@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
 const { User, Role } = require('../mongo');
 const { hashJwtToken } = require('../utils/credentials');
+const { resolveUserValidationType } = require('../utils/tools');
 
 const findById = async (parent, args, context, info) => {
     const { id } = args;
@@ -11,7 +11,11 @@ const findById = async (parent, args, context, info) => {
     
     try {
         const result = await User.findById(requestedUserId).populate([
-            'role', 
+            'organisation',
+            {
+                path: 'role',
+                populate: ['includes scopes']
+            },
             {
                 path: 'pins',
                 populate: ['pinItem']
@@ -30,7 +34,11 @@ const findById = async (parent, args, context, info) => {
 const find = async (parent, args, context, info) => {
     try {
         const result = await User.find({}).populate([
-            'role',
+            'organisation',
+            {
+                path: 'role',
+                populate: ['includes scopes']
+            },
             {
                 path: 'pins',
                 populate: ['pinItem']
@@ -42,6 +50,29 @@ const find = async (parent, args, context, info) => {
         ]);
         
         return result
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+const validate = async (parent, args, context, info) => {
+    const { validationTypes, value, limit } = args;
+    
+    const resolvedSearchProperties = validationTypes.map(resolveUserValidationType).flat();
+    const resolvedQuery = resolvedSearchProperties.map(property => (
+        {[property]: {
+            $regex: value,
+            $options: 'ig'
+        }}
+    ));
+    const limitResults = limit === 0 ? undefined : limit;
+    
+    try {
+        const results = await User.find({
+            $or: resolvedQuery
+        }).limit(limitResults);
+        
+        return results;
     } catch (error) {
         throw new Error(error);
     }
@@ -68,7 +99,12 @@ const createOrUpdate = async (parent, args, context, info) => {
                 ...(password && { password: hashedPassword })
             });
             
-            const populated = await User.findById(created._id).populate('role');
+            const populated = await User.findById(created._id).populate([
+                {
+                    path: 'role',
+                    populate: ['includes scopes']
+                },
+            ]);
             console.log({populated})
             return populated;
             
@@ -79,7 +115,13 @@ const createOrUpdate = async (parent, args, context, info) => {
                     ...args.user,
                     ...(password && { password: hashedPassword })
                 }
-            ).populate('role tribes pins');
+            ).populate([
+                'tribes pins',
+                {
+                    path: 'role',
+                    populate: ['includes scopes']
+                },
+            ]);
             
             console.log({  updated })
             
@@ -133,11 +175,24 @@ const updateRole = async (parent, args, context, info) => {
         if (!user || !role) {
             throw new Error('User or Role does not exist');
         }
-        
-        User.updateOne()
                 
-        await user.updateOne({ role: role._id });
-        const populatedUser = await User.findById(user._id).populate('role tribes pins');
+        await User.findByIdAndUpdate(userId, { role: role._id });
+        
+        const populatedUser = await User.findById(user._id).populate([
+            'organisation',
+            {
+                path: 'role',
+                populate: ['includes scopes']
+            },
+            {
+                path: 'pins',
+                populate: ['pinItem']
+            },
+            {
+                path: 'tribes',
+                populate: ['creator owners locations verified']
+            }
+        ]);
         return populatedUser;
     } catch (error) {
         throw new Error(error);
@@ -147,6 +202,7 @@ const updateRole = async (parent, args, context, info) => {
 module.exports = {
     find,
     findById,
+    validate,
     createOrUpdate,
     createAndGenerateBearer,
     updateRole

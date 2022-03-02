@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useEffect } from 'react';
-import { Button, ButtonGroup, Form, Input, InputGroup } from '../components';
+import { Button, ButtonGroup, Form, Input, InputGroup, List } from '../components';
 import { MUTATE, QUERY } from '../graphql';
 
 const CreateRole = ({ onReset, onSubmit, onReady, role, otherProps }) => {
@@ -32,6 +32,7 @@ const CreateRole = ({ onReset, onSubmit, onReady, role, otherProps }) => {
     
     return (
         <Form 
+            test
             defaultValues={{
                 ...role,
                 'includes[0]': role?.includes?.[0]?.id
@@ -40,30 +41,57 @@ const CreateRole = ({ onReset, onSubmit, onReady, role, otherProps }) => {
             loading={ roleUpdateState.loading }
             { ...otherProps }
         >
-            <InputGroup>
-                <Input block name="label" label="Rol label" placeholder="Bv. Moderator" />
-                <Input block name="name" label="Rol code" placeholder="Bv. MOD" />
-            </InputGroup>
-            <Input 
-                block
-                label="Inclusief rechten" 
-                type="select" 
-                name="includes[0]"
-                setValueAs={value => {
-                    console.log({ value})
-                    if (value === 'noRole') return undefined
-                    else return value
-                }}
-            >
-                <option value="noRole">Geen extra rechten</option>
-                { roleState.data?.readRoles?.filter(r => r.id !== role?.id).map(role => (
-                    <option key={ role.id } value={ role.id }>{ role.label }</option>
-                ))}
-            </Input>
-            <ButtonGroup className="mt-6">
-                <Button type="submit" theme="primary" loading={ roleUpdateState.loading }>Rol { role ? 'opslaan' : 'toevoegen'}</Button>
-                <Button type="reset" onClick={ handleReset } disabled={ roleUpdateState.loading }>annuleren</Button>
-            </ButtonGroup>
+            <div className="grid grid-cols-12 gap-6">
+                <div className="col-span-4">
+                    <InputGroup>
+                        <Input block name="label" label="Rol label" placeholder="Bv. Moderator" />
+                    </InputGroup>
+                    <InputGroup>
+                        <Input block name="name" label="Rol code" placeholder="Bv. MOD" />
+                    </InputGroup>
+                    <InputGroup>
+                        <Input 
+                            block
+                            label="Inclusief rechten" 
+                            type="select" 
+                            name="includes[0]"
+                            setValueAs={value => {
+                                console.log({ value})
+                                if (value === 'noRole') return undefined
+                                else return value
+                            }}
+                        >
+                            <option value="noRole">Geen extra rechten</option>
+                            { roleState.data?.readRoles?.filter(r => r.id !== role?.id).map(role => (
+                                <option key={ role.id } value={ role.id }>{ role.label }</option>
+                            ))}
+                        </Input>
+                    </InputGroup>
+                    <ButtonGroup className="mt-6">
+                        <Button type="submit" theme="primary" loading={ roleUpdateState.loading }>Rol { role ? 'opslaan' : 'toevoegen'}</Button>
+                        <Button type="reset" onClick={ handleReset } disabled={ roleUpdateState.loading }>annuleren</Button>
+                    </ButtonGroup>
+                </div>
+                <div className="col-span-8">
+                    <List>
+                        {(ListItem) => (<>
+                            { roleState.data?.readAuthScopes?.map((scope) => (
+                                <ListItem>
+                                    <div className="flex items-center">
+                                        <div className="flex-1 flex items-center">
+                                            <Input type="checkbox" name={ 'scope.' + scope.id } className="mr-3" />
+                                            <h3 className="lowercase font-display">{ scope.name }</h3>
+                                        </div>
+                                        <div className="flex-1">
+                                            <h3 className="text-gray-700">{ scope.description }</h3>
+                                        </div>
+                                    </div>
+                                </ListItem>
+                            ))}
+                        </>)}
+                    </List>
+                </div>
+            </div>
         </Form>
     )
 }

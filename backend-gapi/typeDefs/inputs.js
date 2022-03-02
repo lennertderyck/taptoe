@@ -29,6 +29,11 @@ module.exports = gql`
     password: String
     passwordConfirmation: String
   }
+  
+  input AuthScopeInput {
+    name: String!
+    description: String
+  }
 
   input AddressInput {
     street: String

@@ -13,6 +13,10 @@ const Role = new Schema({
     includes: [{
         type: Schema.Types.ObjectId,
         ref: "Role"
+    }],
+    scopes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'AuthScope'
     }]
 })
 

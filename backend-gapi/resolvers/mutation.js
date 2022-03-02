@@ -3,7 +3,7 @@
  */
 const { AuthenticationError } = require('apollo-server');
 const bcrypt = require('bcrypt');
-const { userController, tribeController, locationsController, orgsController, rolesController, pricingPackageController, userPinsController, signInTokensController } = require('../controllers');
+const { userController, tribeController, locationsController, orgsController, rolesController, pricingPackageController, userPinsController, signInTokensController, authScopesController } = require('../controllers');
 const { User, Tribe, Role } = require('../mongo');
 const { protectedRoute } = require('../utils/credentials');
 const { transformId } = require('../utils/mongo');
@@ -26,6 +26,10 @@ module.exports = {
         writeUserRole: userController.updateRole,
         writeUser: userController.createOrUpdate,
         writeUserAndLogin: userController.createAndGenerateBearer,
+        
+        // AUTH SCOPES
+        writeAuthScope: authScopesController.createOrUpdate,
+        deleteAuthScope: authScopesController.deleteById,
         
         // OTP TOKENS
         writeSignInToken: signInTokensController.create,

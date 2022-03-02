@@ -2,10 +2,8 @@ import React, { Children, Fragment } from 'react';
 import classNames from 'classnames';
 import { Devider } from '..';
 
-const ButtonGroup = ({ children, className, ...otherProps }) => {
+const ButtonGroup = ({ children, className, dividerHidden, ...otherProps }) => {
     const childrenArray = Children.toArray(children);
-    
-    console.log()
     
     return (
         <div className={ classNames('flex flex-wrap items-center', className)} { ...otherProps }>
@@ -14,7 +12,7 @@ const ButtonGroup = ({ children, className, ...otherProps }) => {
                     <div>
                         { child }
                     </div>
-                    <Devider className="mx-3 last:hidden self-stretch" />
+                    { !dividerHidden ? <Devider className="mx-3 last:hidden self-stretch" /> : <div className="mr-3 last:mr-0" /> }
                 </Fragment>
             ))}
         </div>

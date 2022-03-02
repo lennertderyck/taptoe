@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Container, PageHeader } from '../../components';
+import { Container, Padded, PageHeader } from '../../components';
 import * as Forms from '../../forms';
 import { useAuth } from '../../hooks';
 import { BaseLayout } from '../../layouts';
@@ -33,11 +33,13 @@ const LoginModule = () => {
     return (
         <BaseLayout>
             <Container>
-                <PageHeader 
-                    subtitle="Aanmelden of registreren"
-                    title="Meld je aan om verder te gaan"
-                />
-                <Forms.Login otpToken={ otpToken } onReady={ setLoginResponse } />
+                <Padded xl className="rounded-2xl border-2 border-gray-200 max-w-[600px] mx-auto block">
+                    <PageHeader 
+                        subtitle="Account"
+                        title="Aanmelden of registreren"
+                    />
+                    <Forms.Login otpToken={ otpToken } onReady={ setLoginResponse } />
+                </Padded>
             </Container>
         </BaseLayout>
     )
