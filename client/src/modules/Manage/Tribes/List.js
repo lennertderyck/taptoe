@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { MUTATE, QUERY } from '../../../graphql';
-import { Button, ButtonGroup, Icon, Input, List, SymbolButton, VerifySelector, Form } from '../../../components';
+import { Button, ButtonGroup, Icon, Input, List, SymbolButton, VerifySelector, Form, InputGroup } from '../../../components';
 import { Link, useNavigate } from 'react-router-dom';
 
 const TribesList = () => {
@@ -84,13 +84,21 @@ const TribesList = () => {
                                     >
                                         {(values, methods) => (
                                             <>
-                                                <h4 className="mb-2">Verificatie</h4>
-                                                <div className="flex">
-                                                    <VerifySelector setValueAs={ v => v === 'none' ? undefined : v } />
-                                                    { tribe?.verified?.id !== values?.verified && (
-                                                        <Button type="submit" theme="primary" className="ml-3">{ values?.verified === 'none' ? 'Verificatie verwijderen' : 'Verifieren' }</Button>
-                                                    )}
-                                                </div>
+                                                <InputGroup>
+                                                    <div>
+                                                        <h4 className="mb-2">Verificatie</h4>
+                                                        <VerifySelector setValueAs={ v => v === 'none' ? undefined : v } block />
+                                                        { tribe?.verified?.id !== values?.verified && (
+                                                            <Button type="submit" theme="primary" className="ml-3">{ values?.verified === 'none' ? 'Verificatie verwijderen' : 'Verifieren' }</Button>
+                                                        )}
+                                                    </div>
+                                                    <Input type="select" name="status" label="Status" block>
+                                                        <option value="PUBLISHED">Gepubliceerd</option>
+                                                        <option value="DRAFT">Concept</option>
+                                                        <option value="PENDING">Pending</option>
+                                                        <option value="UNAPPROVED">Niet geaccepteerd</option>
+                                                    </Input>
+                                                </InputGroup>
                                             </>
                                         )}
                                     </Form>
