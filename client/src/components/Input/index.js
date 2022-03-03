@@ -44,6 +44,8 @@ const Input = ({ icon, label, name = '', block, type, setValueAs, ...otherProps 
         })
     }
     
+    console.log({ fieldProperties })
+    
     const renderField = (type, otherProps) => {
         return {
             'select': (

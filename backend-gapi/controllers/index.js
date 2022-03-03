@@ -10,4 +10,5 @@ module.exports = {
     userPinsController: require('./userPins'),
     signInTokensController: require('./signInTokens'),
     authScopesController: require('./authScopes'),
+    importController: require('./import'),
 }

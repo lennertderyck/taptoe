@@ -20,6 +20,7 @@ module.exports = gql`
     name: String!
     label: String!
     includes: [ID]
+    scopes: [ID]
   }
 
   input UserInput {
@@ -55,6 +56,8 @@ module.exports = gql`
       The ID of a registerd organisation
     """
     verified: ID @auth(requires: "ADMIN")
+    
+    status: TribeStatus
   }
   
   input LocationInput {

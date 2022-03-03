@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import classNames from 'classnames';
 
 const Wrapper = styled.div`
-    margin-top: 3rem;
+    ${ props => !props.standAlone && 'margin-top: 3rem;' }
 `;
 
-const Container = ({ children, className }) => {
+const Container = ({ children, className, standAlone = false }) => {
     return (
-        <Wrapper className={ classNames('container mx-auto max-w-6xl px-12', className) }>
+        <Wrapper 
+            standAlone={ standAlone }
+            className={ classNames('container mx-auto max-w-6xl px-12', className) }
+        >
             { children }
         </Wrapper>
     )

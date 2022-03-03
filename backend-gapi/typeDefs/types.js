@@ -97,6 +97,7 @@ module.exports = gql`
     owners: [User],
     locations: [Location],
     verified: Organisation
+    status: TribeStatus
   }
   
   type LocationKitchenProperties {

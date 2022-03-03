@@ -31,3 +31,4 @@ export { default as UserSearch } from './UserSearch';
 export { default as VerifySelector } from './VerifySelector';
 export { default as TribeTransferPopup } from './TribeTransferPopup';
 export { default as Padded } from './Padded';
+export { default as DevToolsBar } from './DevToolsBar';

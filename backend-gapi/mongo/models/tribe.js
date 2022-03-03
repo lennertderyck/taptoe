@@ -48,6 +48,11 @@ const TribeSchema = new Schema({
     verified: {
         type: Schema.Types.ObjectId,
         ref: 'Organisation'
+    },
+    status: {
+        type: String,
+        default: 'PENDING',
+        enum: ['PUBLISHED', 'DRAFT', 'PENDING', 'UNAPPROVED']
     }
 })
 

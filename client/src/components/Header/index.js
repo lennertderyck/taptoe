@@ -29,47 +29,49 @@ const Header = ({ large }) => {
     // TODO: show a modal when user is starting to type and focus on the input
     
     return (
-        <NativeHeader { ...{ large }}>
-            <HeaderBackdrop { ...{ large }} />
-            <div className="z-10 w-full flex justify-between items-center">
-                <div className="flex items-center">
-                    <Link to="/">
-                        <h1
-                            className="font-display text-3xl font-semibold mr-8"
-                        >taptoe</h1>
-                    </Link>
+        <>
+            <NativeHeader { ...{ large }}>
+                <HeaderBackdrop { ...{ large }} />
+                <div className="z-10 w-full flex justify-between items-center">
+                    <div className="flex items-center">
+                        <Link to="/">
+                            <h1
+                                className="font-display text-3xl font-semibold mr-8"
+                            >taptoe</h1>
+                        </Link>
                     
-                    <div className="" onClick={ handleSearchInput }>
-                        <Form
-                            onChange={ handleSearchInput }
-                        >
-                            <Input
-                                icon="search"
-                                name="query"
-                                type="search"
-                                block
-                                placeholder="Plaats, verenging, etc."
-                            />
-                        </Form>
+                        <div className="" onClick={ handleSearchInput }>
+                            <Form
+                                onChange={ handleSearchInput }
+                            >
+                                <Input
+                                    icon="search"
+                                    name="query"
+                                    type="search"
+                                    block
+                                    placeholder="Plaats, verenging, etc."
+                                />
+                            </Form>
+                        </div>
+                    </div>
+                    <div className="flex items-center">
+                        <ButtonGroup>
+                            <AccountButton />
+                            {( user?.role?.name === 'ADMIN' || user?.role?.includes?.[0]?.name === 'ADMIN' )&& (
+                                <Link
+                                    className="text-lg text-tt-emerald-700 bold bg-gray-100 px-4 py-2 rounded-xl flex items-center font-display lowercase relative"
+                                    to="/manage"
+                                >   
+                                    { adminPanelNotifyAvailable && <div className="h-3 w-3 absolute -top-0.5 -right-0.5 bg-tt-emerald-500 z-10 rounded-full" />}
+                                    <Icon name="flashlight" className="text-tt-emerald-700 mr-3" color="currentColor" />
+                                    <span>Beheer</span>
+                                </Link>
+                            )}
+                        </ButtonGroup>
                     </div>
                 </div>
-                <div className="flex items-center">
-                    <ButtonGroup>
-                        <AccountButton />
-                        {( user?.role?.name === 'ADMIN' || user?.role?.includes?.[0]?.name === 'ADMIN' )&& (
-                            <Link
-                                className="text-lg text-tt-emerald-700 bold bg-gray-100 px-4 py-2 rounded-xl flex items-center font-display lowercase relative"
-                                to="/manage"
-                            >   
-                                { adminPanelNotifyAvailable && <div className="h-3 w-3 absolute -top-0.5 -right-0.5 bg-tt-emerald-500 z-10 rounded-full" />}
-                                <Icon name="flashlight" className="text-tt-emerald-700 mr-3" color="currentColor" />
-                                <span>Beheer</span>
-                            </Link>
-                        )}
-                    </ButtonGroup>
-                </div>
-            </div>
-        </NativeHeader>
+            </NativeHeader>
+        </>
     )
 }
 

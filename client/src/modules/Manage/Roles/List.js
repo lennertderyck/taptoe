@@ -25,7 +25,7 @@ const RoleEditor = () => {
                                 </h4>
                             </div>
                             <div>
-                                { roleEditMode !== role.id && <Button icon="settings-4" theme="minimal" onClick={() => setRoleEditMode(role.id)} /> }
+                                { roleEditMode !== role.id && <Button icon="settings-4" onClick={() => setRoleEditMode(role.id)} /> }
                             </div>
                         </div>
                         { roleEditMode === role.id && <Padded lg className="mt-4 border-2 border-gray-200 rounded-2xl">
@@ -35,14 +35,14 @@ const RoleEditor = () => {
                                         id: role.id,
                                         name: role.name,
                                         label: role.label,
-                                        includes: [role.includes[0]?.id]
+                                        includes: [role.includes[0]?.id],
+                                        scopes: role?.scopes?.map(scope => scope.id)
                                     }}
                                     onReset={() => setRoleEditMode(false)} 
                                     onReady={() => {
                                         setRoleEditMode(false)
                                         rolesState.refetch()
                                     }}
-                                    test
                                 />
                             </div>    
                         </Padded>}

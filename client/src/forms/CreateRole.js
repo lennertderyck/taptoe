@@ -19,7 +19,7 @@ const CreateRole = ({ onReset, onSubmit, onReady, role, otherProps }) => {
             
             updateOrCreateRole({ variables: { 
                 role: roleData,
-                id
+                id: role.id
             }})
         }
     }
@@ -32,7 +32,6 @@ const CreateRole = ({ onReset, onSubmit, onReady, role, otherProps }) => {
     
     return (
         <Form 
-            test
             defaultValues={{
                 ...role,
                 'includes[0]': role?.includes?.[0]?.id
@@ -75,17 +74,17 @@ const CreateRole = ({ onReset, onSubmit, onReady, role, otherProps }) => {
                 <div className="col-span-8">
                     <List>
                         {(ListItem) => (<>
-                            { roleState.data?.readAuthScopes?.map((scope) => (
+                            { roleState.data?.readAuthScopes?.map((scope, index) => (
                                 <ListItem>
-                                    <div className="flex items-center">
+                                    <label className="flex items-center">
                                         <div className="flex-1 flex items-center">
-                                            <Input type="checkbox" name={ 'scope.' + scope.id } className="mr-3" />
+                                            <Input type="checkbox" name={ `scopes` } value={ scope.id } className="mr-3" />
                                             <h3 className="lowercase font-display">{ scope.name }</h3>
                                         </div>
                                         <div className="flex-1">
                                             <h3 className="text-gray-700">{ scope.description }</h3>
                                         </div>
-                                    </div>
+                                    </label>
                                 </ListItem>
                             ))}
                         </>)}

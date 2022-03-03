@@ -11,7 +11,7 @@ import './sass/index.scss'
 import { AuthProvider } from './contexts/AuthContext';
 import { AccountModule, AuthScopesModule, LocationDetailModule, LocationEditModule, LocationModule, LoginModule, ManageModule, ManageOverviewModule, ManageTribesModule, ManageUserRolesModule, ManageUsersModule, ManageWrapperModule, NewLocationModule, NewTribeModule, TribeDetailModule, TribeModule } from './modules';
 import client from './graphql/client';
-import { HelpSidebar, Icon, Splash, SpotlightSearch } from './components';
+import { DevToolsBar, HelpSidebar, Icon, Splash, SpotlightSearch } from './components';
 import { HelpProvider } from './contexts/HelpContext';
 import { SplashProvider, AppContextProvider} from './contexts';
 import { ReactComponent as Logo } from './assets/logo.svg';
@@ -24,7 +24,7 @@ const forcedDevMode = forceParam === '' || forceParam === 'dev' || devParam === 
 
 ReactDOM.render(
   <React.StrictMode>
-    { process.env.NODE_ENV === 'production' || !forcedDevMode ? (
+    { process.env.NODE_ENV === 'production' ? (
       <div className="h-full w-full flex flex-col items-center justify-center bg-[#E7ECEB]">
         <div className="flex-1 flex flex-col items-center justify-center p-8">
           <Logo width="120px" className="mx-auto mb-4" />
@@ -49,6 +49,7 @@ ReactDOM.render(
         <BrowserRouter>
           <AuthProvider>
             <AppContextProvider>
+              <DevToolsBar />
               <SplashProvider>
                 <Routes>
                   <Route path="/" element={<App />} />

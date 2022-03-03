@@ -121,5 +121,8 @@ module.exports = gql`
     readUserPinById(id: ID): UserPin @auth(requires: "USER")
     readUserPin(pinItemId: ID, pinType: String): UserPin @auth(requires: "USER")
     readUserPins: [UserPin] @auth(requires: "USER")
+    
+    # IMPORTS
+    import: Json
   }
 `

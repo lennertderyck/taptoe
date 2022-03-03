@@ -242,6 +242,11 @@ export default {
                     label
                     name
                 }
+                scopes {
+                    id
+                    name
+                    description
+                }
             }
             readAuthScopes {
                 id

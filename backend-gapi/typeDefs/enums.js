@@ -44,4 +44,11 @@ module.exports = gql`
     NAME
     EMAIL
   }
+  
+  enum TribeStatus {
+    PUBLISHED
+    DRAFT
+    PENDING
+    UNAPPROVED
+  }
 `
