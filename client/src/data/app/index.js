@@ -16,7 +16,7 @@ export const authScopeTypes = [
 ]
 
 export const devBarLinks = [
-    { label: 'GraphQL api', url: 'http://localhost:4000' },
-    { label: 'Mapbox', url: 'https://account.mapbox.com/' },
-    { label: 'Remix icons', url: 'https://remixicon.com/' },
+    { label: 'GraphQL api', url: 'http://localhost:4000', external: true },
+    { label: 'Mapbox', url: 'https://account.mapbox.com/', external: true },
+    { label: 'Icons', url: '/manage/dev/icons' },
 ]

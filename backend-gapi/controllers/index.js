@@ -11,4 +11,5 @@ module.exports = {
     signInTokensController: require('./signInTokens'),
     authScopesController: require('./authScopes'),
     importController: require('./import'),
+    toolsController: require('./tools'),
 }

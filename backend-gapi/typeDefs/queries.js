@@ -1,3 +1,4 @@
+
 /**
  * The GraphQL queries
  */
@@ -64,6 +65,8 @@ module.exports = gql`
       
       "The ID of users to exclude from the results."
       exclude: [ID]
+      
+      exact: Boolean = false
     ): [User]
     
     """
@@ -124,5 +127,8 @@ module.exports = gql`
     
     # IMPORTS
     import: Json
+    
+    # TOOLS
+    icons(filter: String): [String]
   }
 `

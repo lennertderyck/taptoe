@@ -41,7 +41,12 @@ const DevToolsBar = () => {
                     <div className="flex">
                         { devBarLinks.map(link => (
                             <>
-                                <a className="font-display lowercase text-gray-700 flex items-center" href={ link.url } target="_blank" rel="noopener">
+                                <a 
+                                    className="font-display lowercase text-gray-700 flex items-center" 
+                                    href={ link.url } 
+                                    target={ link.external ? '_blank' : '_self' }
+                                    rel={ link.external ? 'noopener noreferrer' : '' }
+                                >
                                     <span>{ link.label }</span>
                                     <Icon name="arrow-right" size="1rem" color="currentColor" className="ml-2 text-gray-500" />
                                 </a>

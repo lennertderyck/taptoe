@@ -56,20 +56,37 @@ const find = async (parent, args, context, info) => {
 }
 
 const validate = async (parent, args, context, info) => {
-    const { validationTypes, value, limit } = args;
+    const { validationTypes, value, limit, exact } = args;
     
+    console.log(args)
+    
+    // convert enum value to database property
     const resolvedSearchProperties = validationTypes.map(resolveUserValidationType).flat();
-    const resolvedQuery = resolvedSearchProperties.map(property => (
-        {[property]: {
-            $regex: value,
-            $options: 'ig'
-        }}
-    ));
+    
+    // map each property to a mongo query
+    const resolvedQuery = resolvedSearchProperties.map(property => {
+        // an exact match is required, just return the propery with the value
+        if (exact) {
+            return {
+                [property]: value
+            }
+        } 
+        
+        // otherwise, return a regex query which will match any value that contains the value
+        else {
+            return {
+                [property]: {
+                    $regex: value,
+                    $options: 'ig'
+                }
+            }
+        }
+    });
     const limitResults = limit === 0 ? undefined : limit;
     
     try {
         const results = await User.find({
-            $or: resolvedQuery
+            $or: resolvedQuery,
         }).limit(limitResults);
         
         return results;

@@ -14,3 +14,4 @@ export { default as ManageUsersModule } from './Manage/Users';
 export { default as ManageWrapperModule } from './Manage/Wrapper';
 export { default as ManageTribesModule } from './Manage/Tribes';
 export { default as AuthScopesModule } from './Manage/AuthScopes';
+export { default as IconsDevelopmentModule } from './Development/Icons';

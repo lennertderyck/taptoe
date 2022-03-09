@@ -71,8 +71,8 @@ export default {
     `,
     
     VALIDATE_USER: gql`
-        query validateUser($validationTypes: [UserValidationType!], $value: String!, $limit: Int = 4) {
-            validateUser(validationTypes: $validationTypes, value:$value, limit: $limit) {
+        query validateUser($validationTypes: [UserValidationType!], $value: String!, $limit: Int = 4, $exact: Boolean = false) {
+            validateUser(validationTypes: $validationTypes, value:$value, limit: $limit, exact: $exact) {
                 id
                 firstName
                 lastName
@@ -291,6 +291,12 @@ export default {
                 name
                 description
             }
+        }
+    `,
+    
+    ICONS: gql`
+        query icons($filter: String) {
+            icons(filter: $filter)
         }
     `,
 }

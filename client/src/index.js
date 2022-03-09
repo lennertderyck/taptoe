@@ -4,12 +4,14 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import {
   ApolloProvider,
 } from "@apollo/client";
-import App from './App';
 import { register as registerServiceWorker } from './serviceWorkerRegistration';
+import { ToastContainer } from 'react-toastify';
 
+
+import App from './App';
 import './sass/index.scss'
 import { AuthProvider } from './contexts/AuthContext';
-import { AccountModule, AuthScopesModule, LocationDetailModule, LocationEditModule, LocationModule, LoginModule, ManageModule, ManageOverviewModule, ManageTribesModule, ManageUserRolesModule, ManageUsersModule, ManageWrapperModule, NewLocationModule, NewTribeModule, TribeDetailModule, TribeModule } from './modules';
+import { AccountModule, AuthScopesModule, IconsDevelopmentModule, LocationDetailModule, LocationEditModule, LocationModule, LoginModule, ManageModule, ManageOverviewModule, ManageTribesModule, ManageUserRolesModule, ManageUsersModule, ManageWrapperModule, NewLocationModule, NewTribeModule, TribeDetailModule, TribeModule } from './modules';
 import client from './graphql/client';
 import { DevToolsBar, HelpSidebar, Icon, Splash, SpotlightSearch } from './components';
 import { HelpProvider } from './contexts/HelpContext';
@@ -57,11 +59,20 @@ ReactDOM.render(
                           <Route path="auth-scopes" element={<AuthScopesModule />} />
                         </Route>
                       </Route>
+                      <Route path="dev">
+                        <Route path="icons" element={<IconsDevelopmentModule />} />
+                      </Route>
                     </Route>
                     <Route path="*" element={<div>Not found</div>} />
                   </Routes>
                 </SplashProvider>
-                
+                <ToastContainer 
+                  position="bottom-center"
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                />
                 <HelpSidebar />
                 {/* <SpotlightSearch /> */}
               </AppContextProvider>

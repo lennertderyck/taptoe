@@ -1,0 +1,14 @@
+@import '~react-toastify/dist/ReactToastify.css';
+
+:root {
+    --toastify-color-progress-light: #5D9C8B;
+    --toastify-toast-width: 400px;
+}
+
+.Toastify__toast {
+    @apply rounded-xl;
+}
+
+.Toastify__toast-body {
+    @apply p-3;
+}

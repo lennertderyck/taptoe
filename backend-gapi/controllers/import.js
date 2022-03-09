@@ -1,8 +1,11 @@
 const fetch = require('node-fetch');
 const { Tribe } = require('../mongo');
+const { geocode } = require('../utils/mapbox');
 
 const startImport = async (parent, args, context, info) => {
     const currentUserId = context.userId;
+    
+    const result = await geocode('Europalaan 2 Destelbergen');
     
     const e = {
         "guid": "f42004c6-5f7f-4439-9df8-fe8140789d7a",
@@ -43,6 +46,15 @@ const startImport = async (parent, args, context, info) => {
     });
     
     const data = await req.json();
+    const geocodedAddresses = await Promise.all(data.map(async r => {
+      const query = `${r.straat} ${r.postcode} ${r.gemeente}`;
+      const geocodeResult = await geocode(query);
+      
+      return await {
+        ...r,
+        address: geocodeResult
+      }
+    }));
     
     // Location.create({
     //     creator: currentUserId,
@@ -51,7 +63,7 @@ const startImport = async (parent, args, context, info) => {
     //     longitude: e.longitude,
     // })
     
-    return data
+    return geocodedAddresses
 }
 
 module.exports = {
