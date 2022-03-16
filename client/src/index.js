@@ -6,7 +6,7 @@ import {
 } from "@apollo/client";
 import { register as registerServiceWorker } from './serviceWorkerRegistration';
 import { ToastContainer } from 'react-toastify';
-
+import "babel-polyfill";
 
 import App from './App';
 import './sass/index.scss'

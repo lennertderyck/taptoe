@@ -7,21 +7,6 @@ const startImport = async (parent, args, context, info) => {
     
     const result = await geocode('Europalaan 2 Destelbergen');
     
-    const e = {
-        "guid": "f42004c6-5f7f-4439-9df8-fe8140789d7a",
-        "nummer": 9051,
-        "naam": "'t Chiropaksken",
-        "straat": "Appelterredorp 13 A",
-        "postcode": "9400",
-        "gemeente": "Appelterre-Eichem",
-        "minimumPrijs": "152",
-        "capaciteitZomer": 60,
-        "capaciteitNietZomer": 40,
-        "latitude": 50.8184179,
-        "longitude": 3.9673586,
-        "foto": "http://s3-eu-west-1.amazonaws.com/cjt20034/Jeugdverblijven/f42004c6-5f7f-4439-9df8-fe8140789d7a/Afbeelding/e3c4b279-7bef-45a7-95aa-6fa14a524e24-thumb"
-      }
-    
     const req = await fetch("https://zelfkook.cjt.be/umbraco/api/search/get", {
       "headers": {
         "accept": "*/*",
